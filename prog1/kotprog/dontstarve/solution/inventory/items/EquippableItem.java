@@ -1,11 +1,15 @@
 package prog1.kotprog.dontstarve.solution.inventory.items;
 
-import prog1.kotprog.dontstarve.solution.exceptions.NotImplementedException;
-
 /**
  * Felvehető / kézbe vehető item leírására szolgáló osztály.
  */
 public abstract class EquippableItem extends AbstractItem {
+
+    /**
+     * A tárgy állapota
+     */
+    private float durability;
+
     /**
      * Konstruktor, amellyel a tárgy létrehozható.
      *
@@ -13,6 +17,7 @@ public abstract class EquippableItem extends AbstractItem {
      */
     public EquippableItem(ItemType type) {
         super(type, 1);
+        durability = 1;
     }
 
     /**
@@ -20,6 +25,11 @@ public abstract class EquippableItem extends AbstractItem {
      * @return a tárgy használatlansága, %-ban (100%: tökéletes állapot)
      */
     public float percentage() {
-        throw new NotImplementedException();
+        return durability*100;
+    }
+
+    @Override
+    public int getMaxStackAmount() {
+        return 1;
     }
 }

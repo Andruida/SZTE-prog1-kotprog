@@ -12,4 +12,9 @@ public class ItemRawBerry extends AbstractItem {
     public ItemRawBerry(int amount) {
         super(ItemType.RAW_BERRY, amount);
     }
+
+    @Override
+    public int getMaxStackAmount() {
+        return 10;
+    }
 }

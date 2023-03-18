@@ -12,4 +12,9 @@ public class ItemRawCarrot extends AbstractItem {
     public ItemRawCarrot(int amount) {
         super(ItemType.RAW_CARROT, amount);
     }
+
+    @Override
+    public int getMaxStackAmount() {
+        return 10;
+    }
 }

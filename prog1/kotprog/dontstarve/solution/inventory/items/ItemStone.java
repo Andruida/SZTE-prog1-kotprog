@@ -12,4 +12,9 @@ public class ItemStone extends AbstractItem {
     public ItemStone(int amount) {
         super(ItemType.STONE, amount);
     }
+
+    @Override
+    public int getMaxStackAmount() {
+        return 10;
+    }
 }

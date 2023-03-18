@@ -12,4 +12,9 @@ public class ItemLog extends AbstractItem {
     public ItemLog(int amount) {
         super(ItemType.LOG, amount);
     }
+
+    @Override
+    public int getMaxStackAmount() {
+        return 15;
+    }
 }

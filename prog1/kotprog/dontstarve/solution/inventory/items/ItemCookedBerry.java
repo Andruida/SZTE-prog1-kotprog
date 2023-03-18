@@ -12,4 +12,9 @@ public class ItemCookedBerry extends AbstractItem {
     public ItemCookedBerry(int amount) {
         super(ItemType.COOKED_BERRY, amount);
     }
+
+    @Override
+    public int getMaxStackAmount() {
+        return 10;
+    }
 }
