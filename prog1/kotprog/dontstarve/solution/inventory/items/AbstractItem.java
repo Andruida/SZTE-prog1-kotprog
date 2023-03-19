@@ -3,7 +3,7 @@ package prog1.kotprog.dontstarve.solution.inventory.items;
 /**
  * Egy általános itemet leíró osztály.
  */
-public abstract class AbstractItem {
+public abstract class AbstractItem implements Cloneable {
 
     /**
      * Az item típusa.
@@ -44,15 +44,9 @@ public abstract class AbstractItem {
 
     /**
      * Az amount settere.
-     * @param amount a tárgy mennyisége (nem lehet negatív vagy nagyobb, mint getMaxStackAmount())
+     * @param amount a tárgy mennyisége
      */
     public void setAmount(int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("Mennyiseg nem lehet negativ");
-        }
-        if (amount > getMaxStackAmount()) {
-            throw new IllegalArgumentException("Nem lehet tobbet tarolni, mint a maximalis mennyiseg");
-        }
         this.amount = amount;
     }
 
@@ -71,4 +65,8 @@ public abstract class AbstractItem {
     public int getMaxStackAmount() {
         return 99;
     }
+
+    @Override
+    public abstract AbstractItem clone();
+
 }

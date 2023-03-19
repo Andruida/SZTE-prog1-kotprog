@@ -10,4 +10,9 @@ public class ItemAxe extends EquippableItem {
     public ItemAxe() {
         super(ItemType.AXE);
     }
+
+    @Override
+    public ItemAxe clone() {
+        return new ItemAxe();
+    }
 }

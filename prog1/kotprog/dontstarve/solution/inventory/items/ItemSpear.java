@@ -10,4 +10,9 @@ public class ItemSpear extends EquippableItem {
     public ItemSpear() {
         super(ItemType.SPEAR);
     }
+
+    @Override
+    public ItemSpear clone() {
+        return new ItemSpear();
+    }
 }

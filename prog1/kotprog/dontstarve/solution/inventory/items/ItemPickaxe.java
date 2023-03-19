@@ -10,4 +10,9 @@ public class ItemPickaxe extends EquippableItem {
     public ItemPickaxe() {
         super(ItemType.PICKAXE);
     }
+
+    @Override
+    public ItemPickaxe clone() {
+        return new ItemPickaxe();
+    }
 }

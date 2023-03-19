@@ -17,4 +17,9 @@ public class ItemTwig extends AbstractItem {
     public int getMaxStackAmount() {
         return 20;
     }
+
+    @Override
+    public ItemTwig clone() {
+        return new ItemTwig(getAmount());
+    }
 }

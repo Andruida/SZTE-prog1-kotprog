@@ -17,4 +17,9 @@ public class ItemCookedBerry extends AbstractItem {
     public int getMaxStackAmount() {
         return 10;
     }
+
+    @Override
+    public ItemCookedBerry clone() {
+        return new ItemCookedBerry(getAmount());
+    }
 }

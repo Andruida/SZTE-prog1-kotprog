@@ -17,4 +17,9 @@ public class ItemLog extends AbstractItem {
     public int getMaxStackAmount() {
         return 15;
     }
+
+    @Override
+    public ItemLog clone() {
+        return new ItemLog(getAmount());
+    }
 }

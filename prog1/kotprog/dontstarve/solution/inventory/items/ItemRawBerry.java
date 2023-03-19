@@ -17,4 +17,9 @@ public class ItemRawBerry extends AbstractItem {
     public int getMaxStackAmount() {
         return 10;
     }
+
+    @Override
+    public ItemRawBerry clone() {
+        return new ItemRawBerry(getAmount());
+    }
 }

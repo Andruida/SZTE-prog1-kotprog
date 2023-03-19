@@ -17,4 +17,9 @@ public class ItemStone extends AbstractItem {
     public int getMaxStackAmount() {
         return 10;
     }
+
+    @Override
+    public ItemStone clone() {
+        return new ItemStone(getAmount());
+    }
 }

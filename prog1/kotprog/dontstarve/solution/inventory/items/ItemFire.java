@@ -15,4 +15,9 @@ public class ItemFire extends AbstractItem {
     public int getMaxStackAmount() {
         return 1;
     }
+    
+    @Override
+    public ItemFire clone() {
+        return new ItemFire();
+    }
 }

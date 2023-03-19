@@ -10,4 +10,9 @@ public class ItemTorch extends EquippableItem {
     public ItemTorch() {
         super(ItemType.TORCH);
     }
+
+    @Override
+    public ItemTorch clone() {
+        return new ItemTorch();
+    }
 }

@@ -17,4 +17,9 @@ public class ItemRawCarrot extends AbstractItem {
     public int getMaxStackAmount() {
         return 10;
     }
+
+    @Override
+    public ItemRawCarrot clone() {
+        return new ItemRawCarrot(getAmount());
+    }
 }
