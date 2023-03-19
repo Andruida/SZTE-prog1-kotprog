@@ -55,8 +55,8 @@ class InventoryTest {
     void addItemMoreThanSlotCanHold() {
         AbstractItem item = new ItemLog(20);
         assertTrue(inventory.addItem(item));
-        assertEquals(item.getType(), inventory.getItem(0).getType());
-        assertEquals(item.getType(), inventory.getItem(1).getType());
+        assertEquals(ItemType.LOG, inventory.getItem(0).getType());
+        assertEquals(ItemType.LOG, inventory.getItem(1).getType());
         assertEquals(15, inventory.getItem(0).getAmount());
         assertEquals(5, inventory.getItem(1).getAmount());
         for (int i = 2; i < 10; i++) {
@@ -69,9 +69,9 @@ class InventoryTest {
     void addItemMultipleOverflow() {
         AbstractItem item = new ItemLog(40);
         assertTrue(inventory.addItem(item));
-        assertEquals(item.getType(), inventory.getItem(0).getType());
-        assertEquals(item.getType(), inventory.getItem(1).getType());
-        assertEquals(item.getType(), inventory.getItem(2).getType());
+        assertEquals(ItemType.LOG, inventory.getItem(0).getType());
+        assertEquals(ItemType.LOG, inventory.getItem(1).getType());
+        assertEquals(ItemType.LOG, inventory.getItem(2).getType());
         assertEquals(15, inventory.getItem(0).getAmount());
         assertEquals(15, inventory.getItem(1).getAmount());
         assertEquals(10, inventory.getItem(2).getAmount());
@@ -87,12 +87,12 @@ class InventoryTest {
         AbstractItem item2 = new ItemTwig(42);
         assertTrue(inventory.addItem(item));
         assertTrue(inventory.addItem(item2));
-        assertEquals(item.getType(), inventory.getItem(0).getType());
-        assertEquals(item.getType(), inventory.getItem(1).getType());
-        assertEquals(item.getType(), inventory.getItem(2).getType());
-        assertEquals(item2.getType(), inventory.getItem(3).getType());
-        assertEquals(item2.getType(), inventory.getItem(4).getType());
-        assertEquals(item2.getType(), inventory.getItem(5).getType());
+        assertEquals(ItemType.LOG, inventory.getItem(0).getType());
+        assertEquals(ItemType.LOG, inventory.getItem(1).getType());
+        assertEquals(ItemType.LOG, inventory.getItem(2).getType());
+        assertEquals(ItemType.TWIG, inventory.getItem(3).getType());
+        assertEquals(ItemType.TWIG, inventory.getItem(4).getType());
+        assertEquals(ItemType.TWIG, inventory.getItem(5).getType());
         assertEquals(15, inventory.getItem(0).getAmount());
         assertEquals(15, inventory.getItem(1).getAmount());
         assertEquals(10, inventory.getItem(2).getAmount());
