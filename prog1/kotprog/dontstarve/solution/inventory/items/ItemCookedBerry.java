@@ -3,7 +3,7 @@ package prog1.kotprog.dontstarve.solution.inventory.items;
 /**
  * A főtt bogyó item leírására szolgáló osztály.
  */
-public class ItemCookedBerry extends AbstractItem {
+public class ItemCookedBerry extends EdibleItem {
     /**
      * Konstruktor, amellyel a tárgy létrehozható.
      *

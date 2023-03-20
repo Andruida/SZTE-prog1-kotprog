@@ -3,7 +3,7 @@ package prog1.kotprog.dontstarve.solution.inventory.items;
 /**
  * A nyers répa item leírására szolgáló osztály.
  */
-public class ItemRawCarrot extends AbstractItem {
+public class ItemRawCarrot extends CookableItem {
     /**
      * Konstruktor, amellyel a tárgy létrehozható.
      *
@@ -21,5 +21,10 @@ public class ItemRawCarrot extends AbstractItem {
     @Override
     public ItemRawCarrot clone() {
         return new ItemRawCarrot(getAmount());
+    }
+
+    @Override
+    public EdibleItem cook() {
+        return new ItemCookedCarrot(getAmount());
     }
 }
