@@ -1,21 +1,29 @@
 package prog1.kotprog.dontstarve.solution.inventory;
 
-import prog1.kotprog.dontstarve.solution.inventory.items.*;
+import prog1.kotprog.dontstarve.solution.exceptions.InvalidStateException;
+import prog1.kotprog.dontstarve.solution.inventory.items.AbstractItem;
+import prog1.kotprog.dontstarve.solution.inventory.items.CookableItem;
+import prog1.kotprog.dontstarve.solution.inventory.items.EdibleItem;
+import prog1.kotprog.dontstarve.solution.inventory.items.EquippableItem;
+import prog1.kotprog.dontstarve.solution.inventory.items.ItemType;
 
+/**
+ * Az inventory osztály, amely a játékos tárgyait tárolja.
+ */
 public class Inventory implements BaseInventory {
 
     /**
-     * Az inventory slotjai
+     * Az inventory slotjai.
      */
     private AbstractItem[] slots;
 
     /**
-     * A kézben tartott tárgy
+     * A kézben tartott tárgy.
      */
     private EquippableItem equippedItem;
 
     /**
-     * Konstruktor
+     * Konstruktor.
      */
     public Inventory() {
         slots = new AbstractItem[10];
@@ -115,7 +123,7 @@ public class Inventory implements BaseInventory {
                 return true;
             }
         }
-        throw new RuntimeException("Ennek nem lenne szabad előfordulnia!");
+        throw new InvalidStateException();
     }
 
     @Override

@@ -6,7 +6,7 @@ package prog1.kotprog.dontstarve.solution.inventory.items;
 public abstract class EquippableItem extends AbstractItem {
 
     /**
-     * A tárgy állapota
+     * A tárgy állapota.
      */
     private float durability;
 
