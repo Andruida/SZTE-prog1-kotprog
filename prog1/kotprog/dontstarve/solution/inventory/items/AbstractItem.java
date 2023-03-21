@@ -62,9 +62,7 @@ public abstract class AbstractItem implements Cloneable {
      * Megadja az item maximális mennyiségét egy slot-ban.
      * @return az item maximális mennyisége egy slot-ban
      */
-    public int getMaxStackAmount() {
-        return 99;
-    }
+    public abstract int getMaxStackAmount();
 
     @Override
     public abstract AbstractItem clone();

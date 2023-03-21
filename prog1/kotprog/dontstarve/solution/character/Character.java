@@ -12,38 +12,38 @@ import prog1.kotprog.dontstarve.solution.utility.Position;
  */
 public class Character implements BaseCharacter {
 
-    /** 
-     * Karakter sebessége 
+    /**
+     * Karakter sebessége
      */
     private float speed;
 
-    /** 
-     * Karakter éhsége 
+    /**
+     * Karakter éhsége
      */
     private float hunger;
 
-    /** 
-     * Karakter életereje 
+    /**
+     * Karakter életereje
      */
     private float hp;
 
-    /** 
-     * Karakter inventory-ja 
+    /**
+     * Karakter inventory-ja
      */
     private final BaseInventory inventory = new Inventory();
 
-    /** 
-     * Karakter jelen pozíciója 
+    /**
+     * Karakter jelen pozíciója
      */
     private Position currentPosition;
 
-    /** 
-     * Karakter utolsó cselekvése 
+    /**
+     * Karakter utolsó cselekvése
      */
     private Action lastAction = new ActionNone();
 
-    /** 
-     * Karakter neve 
+    /**
+     * Karakter neve
      */
     private String name;
 

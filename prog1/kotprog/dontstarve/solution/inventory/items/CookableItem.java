@@ -14,7 +14,7 @@ public abstract class CookableItem extends EdibleItem {
 
     /**
      * Visszaadja a tárgy a főtt változatávát. [másolat]
-     * 
+     *
      * @return a főtt tárgy
      */
     public abstract EdibleItem cook();

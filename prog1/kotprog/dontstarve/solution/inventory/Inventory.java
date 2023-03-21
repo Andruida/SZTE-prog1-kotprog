@@ -23,26 +23,27 @@ public class Inventory implements BaseInventory {
     }
 
     @Override
-    public boolean addItem(final AbstractItem _item) {
-        if (_item == null) {
+    public boolean addItem(final AbstractItem itemRef) {
+        if (itemRef == null) {
             return false;
         }
 
-        AbstractItem item = _item.clone();
+        AbstractItem item = itemRef.clone();
         if (item.getAmount() <= 0) {
             return true;
         }
 
         // van-e ugyanolyan típusú item?
         for (int i = 0; i < slots.length; i++) {
-            if (slots[i] == null || slots[i].getType() != item.getType() || 
-                slots[i].getAmount() == slots[i].getMaxStackAmount()) {
-                    continue;
+            if (slots[i] == null || slots[i].getType() != item.getType() ||
+                slots[i].getAmount() == slots[i].getMaxStackAmount()
+            ) {
+                continue;
             }
-            
+
             if (slots[i].getAmount() + item.getAmount() <= slots[i].getMaxStackAmount()) {
                 slots[i].addAmount(item.getAmount());
-                _item.setAmount(0);
+                itemRef.setAmount(0);
                 return true;
             }
 
@@ -50,8 +51,8 @@ public class Inventory implements BaseInventory {
             slots[i].addAmount(amount);
             AbstractItem newItem = item.clone();
             newItem.addAmount(-amount);
-            _item.setAmount(newItem.getAmount());
-            return this.addItem(_item);
+            itemRef.setAmount(newItem.getAmount());
+            return this.addItem(itemRef);
         }
 
         // van-e üres slot?
@@ -61,7 +62,7 @@ public class Inventory implements BaseInventory {
             }
             if (item.getAmount() <= item.getMaxStackAmount()) {
                 slots[i] = item;
-                _item.setAmount(0);
+                itemRef.setAmount(0);
                 return true;
             }
             int amount = item.getMaxStackAmount();
@@ -69,8 +70,8 @@ public class Inventory implements BaseInventory {
             item.setAmount(amount);
             slots[i] = item;
             newItem.addAmount(-amount);
-            _item.setAmount(newItem.getAmount());
-            return this.addItem(_item);
+            itemRef.setAmount(newItem.getAmount());
+            return this.addItem(itemRef);
         }
 
         return false;
@@ -165,10 +166,8 @@ public class Inventory implements BaseInventory {
             return false;
         }
 
-        if (slots[index1].getAmount() + slots[index2].getAmount() 
-            <= 
-            slots[index1].getMaxStackAmount()) 
-        {
+        int sum = slots[index1].getAmount() + slots[index2].getAmount();
+        if (sum <= slots[index1].getMaxStackAmount()) {
             slots[index1].addAmount(slots[index2].getAmount());
             slots[index2] = null;
             return true;
@@ -262,13 +261,13 @@ public class Inventory implements BaseInventory {
 
     @Override
     public int emptySlots() {
-        int emptySlots_n = 0;
-        for (int i = 0; i < slots.length; i++) {
-            if (slots[i] == null) {
-                emptySlots_n++;
+        int emptySlotsAmount = 0;
+        for (AbstractItem slot : slots) {
+            if (slot == null) {
+                emptySlotsAmount++;
             }
         }
-        return emptySlots_n;
+        return emptySlotsAmount;
     }
 
     @Override
@@ -286,13 +285,13 @@ public class Inventory implements BaseInventory {
 
     public int getItemAmount(ItemType type) {
         int amount = 0;
-        for (int i = 0; i < slots.length; i++) {
-            if (slots[i] == null || slots[i].getType() != type) {
+        for (AbstractItem slot : slots) {
+            if (slot == null || slot.getType() != type) {
                 continue;
             }
-            amount += slots[i].getAmount();
+            amount += slot.getAmount();
         }
         return amount;
     }
-    
+
 }
