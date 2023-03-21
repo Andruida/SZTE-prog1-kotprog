@@ -4,9 +4,13 @@ import prog1.kotprog.dontstarve.solution.character.BaseCharacter;
 import prog1.kotprog.dontstarve.solution.character.actions.Action;
 import prog1.kotprog.dontstarve.solution.exceptions.NotImplementedException;
 import prog1.kotprog.dontstarve.solution.level.BaseField;
+import prog1.kotprog.dontstarve.solution.level.Field;
 import prog1.kotprog.dontstarve.solution.level.Level;
+import prog1.kotprog.dontstarve.solution.utility.GameState;
 import prog1.kotprog.dontstarve.solution.utility.Position;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -25,9 +29,38 @@ public final class GameManager {
     private final Random random = new Random();
 
     /**
+     * A játékban lévő karakterek.
+     */
+    private Map<String, BaseCharacter> characters;
+
+    /**
+     * A pálya.
+     */
+    private BaseField[][] level;
+
+    /**
+     * A játékban eltelt időegységek száma.
+     */
+    private int currentTick;
+
+    /**
+     * A játék állapota.
+     */
+    private GameState gameState;
+
+    /**
+     * A játék tutorial módban induljon-e.
+     */
+    private boolean tutorial;
+
+    /**
      * Az osztály privát konstruktora.
      */
-    private GameManager() {}
+    private GameManager() {
+        gameState = GameState.INIT;
+        currentTick = 0;
+        characters = new HashMap<>();
+    }
 
     /**
      * Az osztályból létrehozott példány elérésére szolgáló metódus.
@@ -68,7 +101,7 @@ public final class GameManager {
      * @return Az adott nevű karakter objektum, vagy null, ha már a karakter meghalt vagy nem is létezett
      */
     public BaseCharacter getCharacter(String name) {
-        throw new NotImplementedException();
+        return characters.get(name);
     }
 
     /**
@@ -76,7 +109,13 @@ public final class GameManager {
      * @return Az életben lévő karakterek száma
      */
     public int remainingCharacters() {
-        throw new NotImplementedException();
+        int count = 0;
+        for (BaseCharacter character : characters.values()) {
+            if (character.getHp() > 0) {
+                count++;
+            }
+        }
+        return count;
     }
 
     /**
@@ -86,7 +125,18 @@ public final class GameManager {
      * @param level a fájlból betöltött pálya
      */
     public void loadLevel(Level level) {
-        throw new NotImplementedException();
+        if (this.level != null) {
+            return;
+        }
+
+        this.level = new BaseField[level.getWidth()][level.getHeight()];
+        for (int y = 0; y < level.getHeight(); y++) {
+            for (int x = 0; x < level.getWidth(); x++) {
+                this.level[x][y] = new Field(level.getColor(x, y));
+            }
+        }
+
+        gameState = GameState.LOADED;
     }
 
     /**
@@ -96,7 +146,10 @@ public final class GameManager {
      * @return az adott koordinátán lévő mező
      */
     public BaseField getField(int x, int y) {
-        throw new NotImplementedException();
+        if (x < 0 || x >= level.length || y < 0 || y >= level[0].length) {
+            return null;
+        }
+        return level[x][y];
     }
 
     /**
@@ -106,6 +159,9 @@ public final class GameManager {
      * @return igaz, ha sikerült elkezdeni a játékot; hamis egyébként
      */
     public boolean startGame() {
+        if (gameState != GameState.READY) {
+            return false;
+        }
         throw new NotImplementedException();
     }
 
@@ -117,7 +173,7 @@ public final class GameManager {
      * @param action az emberi játékos által végrehajtani kívánt akció
      */
     public void tick(Action action) {
-        throw new NotImplementedException();
+        currentTick++;
     }
 
     /**
@@ -127,7 +183,7 @@ public final class GameManager {
      * @return az aktuális időpillanat
      */
     public int time() {
-        throw new NotImplementedException();
+        return currentTick;
     }
 
     /**
@@ -136,6 +192,9 @@ public final class GameManager {
      * @return a győztes karakter vagy null
      */
     public BaseCharacter getWinner() {
+        if (gameState != GameState.FINISHED) {
+            return null;
+        }
         throw new NotImplementedException();
     }
 
@@ -144,7 +203,7 @@ public final class GameManager {
      * @return igaz, ha a játék már elkezdődött; hamis egyébként
      */
     public boolean isGameStarted() {
-        throw new NotImplementedException();
+        return gameState == GameState.RUNNING;
     }
 
     /**
@@ -152,7 +211,7 @@ public final class GameManager {
      * @return igaz, ha a játék már befejeződött; hamis egyébként
      */
     public boolean isGameEnded() {
-        throw new NotImplementedException();
+        return gameState == GameState.FINISHED;
     }
 
     /**
@@ -163,6 +222,9 @@ public final class GameManager {
      * @param tutorial igaz, amennyiben tutorial módot szeretnénk; hamis egyébként
      */
     public void setTutorial(boolean tutorial) {
-        throw new NotImplementedException();
+        if (gameState != GameState.LOADED) {
+            return;
+        }
+        this.tutorial = tutorial;
     }
 }
