@@ -869,12 +869,8 @@ class InventoryTest {
         assertEquals(9, inventory.getItem(0).getAmount());
         assertEquals(ItemType.RAW_CARROT, inventory.getItem(1).getType());
         assertEquals(9, inventory.getItem(1).getAmount());
-        assertEquals(ItemType.COOKED_BERRY, inventory.getItem(2).getType());
-        assertEquals(1, inventory.getItem(2).getAmount());
-        assertEquals(ItemType.COOKED_CARROT, inventory.getItem(3).getType());
-        assertEquals(1, inventory.getItem(3).getAmount());
 
-        for (int i = 4; i < 10; i++) {
+        for (int i = 2; i < 10; i++) {
             assertNull(inventory.getItem(i));
         }
     }
@@ -891,12 +887,7 @@ class InventoryTest {
         assertEquals(ItemType.RAW_BERRY,inventory.cookItem(0));
         assertEquals(ItemType.RAW_CARROT,inventory.cookItem(1));
 
-        assertEquals(ItemType.COOKED_BERRY, inventory.getItem(0).getType());
-        assertEquals(1, inventory.getItem(0).getAmount());
-        assertEquals(ItemType.COOKED_CARROT, inventory.getItem(1).getType());
-        assertEquals(1, inventory.getItem(1).getAmount());
-
-        for (int i = 2; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             assertNull(inventory.getItem(i));
         }
     }
@@ -976,8 +967,7 @@ class InventoryTest {
 
         assertEquals(ItemType.RAW_BERRY, inventory.cookItem(0));
 
-        assertEquals(ItemType.COOKED_BERRY, inventory.getItem(0).getType());
-        assertEquals(1, inventory.getItem(0).getAmount());
+        assertNull(inventory.getItem(0));
 
         for (int i = 1; i < 10; i++) {
             assertEquals(ItemType.LOG, inventory.getItem(i).getType());

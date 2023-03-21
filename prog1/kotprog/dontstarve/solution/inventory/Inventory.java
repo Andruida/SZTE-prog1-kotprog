@@ -79,7 +79,7 @@ public class Inventory implements BaseInventory {
 
     @Override
     public AbstractItem dropItem(int index) {
-        if (index < 0 || index >= slots.length) {
+        if (indexInvalidOrNull(index)) {
             return null;
         }
         AbstractItem droppedItem = slots[index];
@@ -120,10 +120,7 @@ public class Inventory implements BaseInventory {
 
     @Override
     public boolean swapItems(int index1, int index2) {
-        if (index1 < 0 || index1 >= slots.length || index2 < 0 || index2 >= slots.length) {
-            return false;
-        }
-        if (slots[index1] == null || slots[index2] == null) {
+        if (indexInvalidOrNull(index1) || indexInvalidOrNull(index2)) {
             return false;
         }
         AbstractItem temp = slots[index1];
@@ -134,13 +131,7 @@ public class Inventory implements BaseInventory {
 
     @Override
     public boolean moveItem(int index, int newIndex) {
-        if (index < 0 || index >= slots.length || newIndex < 0 || newIndex >= slots.length) {
-            return false;
-        }
-        if (slots[index] == null) {
-            return false;
-        }
-        if (slots[newIndex] != null) {
+        if (indexInvalidOrNull(index) || indexInvalidOrNOTNull(newIndex)) {
             return false;
         }
         slots[newIndex] = slots[index];
@@ -150,10 +141,7 @@ public class Inventory implements BaseInventory {
 
     @Override
     public boolean combineItems(int index1, int index2) {
-        if (index1 == index2 || index1 < 0 || index1 >= slots.length || index2 < 0 || index2 >= slots.length) {
-            return false;
-        }
-        if (slots[index1] == null || slots[index2] == null) {
+        if (indexInvalidOrNull(index1) || indexInvalidOrNull(index2) || index1 == index2) {
             return false;
         }
         if (slots[index1].getType() != slots[index2].getType()) {
@@ -181,10 +169,7 @@ public class Inventory implements BaseInventory {
 
     @Override
     public boolean equipItem(int index) {
-        if (index < 0 || index >= slots.length) {
-            return false;
-        }
-        if (slots[index] == null) {
+        if (indexInvalidOrNull(index)) {
             return false;
         }
         if (!(slots[index] instanceof EquippableItem)) {
@@ -212,41 +197,14 @@ public class Inventory implements BaseInventory {
         return item;
     }
 
-
-    // TODO: Fix cookItem
-    @Override
-    public ItemType cookItem(int index) {
-        if (index < 0 || index >= slots.length) {
+    private ItemType consumeItem(int index, boolean cook) {
+        if (indexInvalidOrNull(index)) {
             return null;
         }
-        if (slots[index] == null) {
+        if (cook && !(slots[index] instanceof CookableItem)) {
             return null;
         }
-        if (!(slots[index] instanceof CookableItem)) {
-            return null;
-        }
-
-        CookableItem item = (CookableItem)slots[index].clone();
-        item.setAmount(1);
-        slots[index].addAmount(-1);
-        if (slots[index].getAmount() <= 0) {
-            slots[index] = null;
-        }
-
-        addItem(item.cook());
-
-        return item.getType();
-    }
-
-    @Override
-    public ItemType eatItem(int index) {
-        if (index < 0 || index >= slots.length) {
-            return null;
-        }
-        if (slots[index] == null) {
-            return null;
-        }
-        if (!(slots[index] instanceof EdibleItem)) {
+        if (!cook && !(slots[index] instanceof EdibleItem)) {
             return null;
         }
 
@@ -257,6 +215,16 @@ public class Inventory implements BaseInventory {
         }
 
         return type;
+    }
+
+    @Override
+    public ItemType cookItem(int index) {
+        return consumeItem(index, true);
+    }
+
+    @Override
+    public ItemType eatItem(int index) {
+        return consumeItem(index, false);
     }
 
     @Override
@@ -292,6 +260,13 @@ public class Inventory implements BaseInventory {
             amount += slot.getAmount();
         }
         return amount;
+    }
+
+    private boolean indexInvalidOrNull(int index) {
+        return index < 0 || index >= slots.length || slots[index] == null;
+    }
+    private boolean indexInvalidOrNOTNull(int index) {
+        return index < 0 || index >= slots.length || slots[index] != null;
     }
 
 }
