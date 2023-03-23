@@ -34,6 +34,15 @@ public class Position {
     }
 
     /**
+     * Az aktuális pozícióhoz képest egy másik pozíció távolságának kiszámítása.
+     * @param other a másik pozíció
+     * @return a kiszámolt távolság
+     */
+    public float distanceTo(Position other) {
+        return (float) Math.sqrt(Math.pow(x - other.x, 2) + Math.pow(y - other.y, 2));
+    }
+
+    /**
      * x koordináta gettere.
      * @return x koordináta
      */

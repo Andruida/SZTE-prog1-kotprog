@@ -57,6 +57,19 @@ public final class GameManager {
      * Az osztály privát konstruktora.
      */
     private GameManager() {
+        tutorial = false;
+        gameState = GameState.INIT;
+        currentTick = 0;
+        characters = new HashMap<>();
+    }
+
+    /**
+     * Visszaállítja a GameManager-t a kiinduló állapotba.
+     * Teszteléskor hasznos.
+     */
+    public void reset() {
+        level = null;
+        tutorial = false;
         gameState = GameState.INIT;
         currentTick = 0;
         characters = new HashMap<>();
@@ -93,6 +106,10 @@ public final class GameManager {
      */
     public Position joinCharacter(String name, boolean player) {
         throw new NotImplementedException();
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -159,10 +176,11 @@ public final class GameManager {
      * @return igaz, ha sikerült elkezdeni a játékot; hamis egyébként
      */
     public boolean startGame() {
-        if (gameState != GameState.READY) {
-            return false;
+        if (gameState == GameState.READY) {
+            gameState = GameState.RUNNING;
+            return true;
         }
-        throw new NotImplementedException();
+        return false;
     }
 
     /**
