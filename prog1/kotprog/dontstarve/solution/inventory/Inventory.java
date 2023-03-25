@@ -20,14 +20,14 @@ public class Inventory implements BaseInventory {
     /**
      * A kézben tartott tárgy.
      */
-    private EquippableItem equippedItem;
+    private EquippableItem localEquippedItem;
 
     /**
      * Konstruktor.
      */
     public Inventory() {
         slots = new AbstractItem[10];
-        equippedItem = null;
+        localEquippedItem = null;
     }
 
     @Override
@@ -185,20 +185,20 @@ public class Inventory implements BaseInventory {
         }
 
         EquippableItem item = (EquippableItem)slots[index];
-        if (equippedItem != null) {
-            slots[index] = equippedItem;
+        if (localEquippedItem != null) {
+            slots[index] = localEquippedItem;
         } else {
             slots[index] = null;
         }
 
-        equippedItem = item;
+        localEquippedItem = item;
         return true;
     }
 
     @Override
     public EquippableItem unequipItem() {
-        EquippableItem item = equippedItem;
-        equippedItem = null;
+        EquippableItem item = localEquippedItem;
+        localEquippedItem = null;
         if (addItem(item)) {
             return null;
         }
@@ -248,7 +248,7 @@ public class Inventory implements BaseInventory {
 
     @Override
     public EquippableItem equippedItem() {
-        return equippedItem;
+        return localEquippedItem;
     }
 
     @Override
@@ -270,9 +270,20 @@ public class Inventory implements BaseInventory {
         return amount;
     }
 
+    /**
+     * Ellenőrzi az index helyességét és hogy a slot üres-e. [negatív logika]
+     * @param index az ellenőrizendő index
+     * @return true, ha az index helytelen vagy a slot nem üres, egyébként false
+     */
     private boolean indexInvalidOrNull(int index) {
         return index < 0 || index >= slots.length || slots[index] == null;
     }
+
+    /**
+     * Ellenőrzi az index helyességét és hogy a slot nem üres-e. [negatív logika]
+     * @param index az ellenőrizendő index
+     * @return true, ha az index helytelen vagy a slot üres, egyébként false
+     */
     private boolean indexInvalidOrNOTNull(int index) {
         return index < 0 || index >= slots.length || slots[index] != null;
     }

@@ -10,77 +10,77 @@ import prog1.kotprog.dontstarve.solution.inventory.items.ItemTwig;
 import prog1.kotprog.dontstarve.solution.inventory.items.ItemType;
 
 public class Field implements BaseField {
-    
+
     /**
      * A mezőn található-e víz.
      */
-    private boolean hasWater;
+    private boolean water;
 
     /**
      * A mezőn található-e fa.
      */
-    private boolean hasTree;
+    private boolean tree;
 
     /**
      * A mezőn található-e kő.
      */
-    private boolean hasStone;
+    private boolean stone;
 
     /**
      * A mezőn található-e tűz.
      */
-    private boolean hasFire;
+    private boolean fire;
 
     /**
      * A mezőn található itemek.
      */
-    private List<AbstractItem> items;
+    private List<AbstractItem> itemList;
 
     /**
      * Konstruktor.
      * @param color a mező színe a térképen
      */
     public Field(int color) {
-        hasWater = false;
-        hasTree = false;
-        hasStone = false;
-        hasFire = false;
-        items = new ArrayList<>();
+        water = false;
+        tree = false;
+        stone = false;
+        fire = false;
+        itemList = new ArrayList<>();
 
 
         switch (color) {
             case MapColors.WATER:
-                hasWater = true;
+                water = true;
                 break;
             case MapColors.TREE:
-                hasTree = true;
+                tree = true;
                 break;
             case MapColors.STONE:
-                hasStone = true;
+                stone = true;
                 break;
             case MapColors.TWIG:
-                items.add(new ItemTwig(1));
+                itemList.add(new ItemTwig(1));
                 break;
             case MapColors.BERRY:
-                items.add(new ItemRawBerry(1));
+                itemList.add(new ItemRawBerry(1));
                 break;
             case MapColors.CARROT:
-                items.add(new ItemRawCarrot(1));
+                itemList.add(new ItemRawCarrot(1));
                 break;
             case MapColors.EMPTY:
             default:
                 break;
-        }   
+        }
     }
 
     /**
      * Metódus, ami megadja, hogy az adott típusú itemből van-e a mezőn.
-     * 
+     *
      * @param itemType az item, amiről lekérdezzük, hogy van-e a mezőn
      * @return true, ha van ilyen item a mezőn, false, ha nincs
      */
     private boolean hasItem(ItemType itemType) {
-        for (AbstractItem i : items) {
+        for (AbstractItem i : itemList) {
             if (i.getType() == itemType) {
                 return true;
             }
@@ -88,19 +88,27 @@ public class Field implements BaseField {
         return false;
     }
 
+    /**
+     * Metódus, ami megadja, hogy a mező üres-e.
+     * @return true, ha üres, false, ha nem
+     */
+    public boolean isEmpty() {
+        return !water && !tree && !stone && !fire && itemList.isEmpty();
+    }
+
     @Override
     public boolean isWalkable() {
-        return !hasWater;
+        return !water;
     }
 
     @Override
     public boolean hasTree() {
-        return hasTree;
+        return tree;
     }
 
     @Override
     public boolean hasStone() {
-        return hasStone;
+        return stone;
     }
 
     @Override
@@ -120,12 +128,12 @@ public class Field implements BaseField {
 
     @Override
     public boolean hasFire() {
-        return hasFire;
+        return fire;
     }
 
     @Override
     public AbstractItem[] items() {
-        return items.toArray(new AbstractItem[items.size()]);
+        return itemList.toArray(new AbstractItem[itemList.size()]);
     }
 
 }
