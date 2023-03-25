@@ -73,4 +73,27 @@ public class Position {
     public void setY(float y) {
         this.y = y;
     }
+
+    /**
+     * Két pozíció egyenlőségét vizsgáló metódus.
+     * @param o a másik pozíció
+     * @return true, ha a két pozíció egyenlő, false, ha nem
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Position position = (Position) o;
+
+        if (Float.compare(position.x, x) != 0) {
+            return false;
+        }
+        return Float.compare(position.y, y) == 0;
+    }
+
 }

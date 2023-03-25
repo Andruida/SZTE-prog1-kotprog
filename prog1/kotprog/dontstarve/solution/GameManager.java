@@ -1,8 +1,15 @@
 package prog1.kotprog.dontstarve.solution;
 
 import prog1.kotprog.dontstarve.solution.character.BaseCharacter;
+import prog1.kotprog.dontstarve.solution.character.Character;
 import prog1.kotprog.dontstarve.solution.character.actions.Action;
 import prog1.kotprog.dontstarve.solution.exceptions.NotImplementedException;
+import prog1.kotprog.dontstarve.solution.inventory.BaseInventory;
+import prog1.kotprog.dontstarve.solution.inventory.items.ItemLog;
+import prog1.kotprog.dontstarve.solution.inventory.items.ItemRawBerry;
+import prog1.kotprog.dontstarve.solution.inventory.items.ItemRawCarrot;
+import prog1.kotprog.dontstarve.solution.inventory.items.ItemStone;
+import prog1.kotprog.dontstarve.solution.inventory.items.ItemTwig;
 import prog1.kotprog.dontstarve.solution.level.BaseField;
 import prog1.kotprog.dontstarve.solution.level.Field;
 import prog1.kotprog.dontstarve.solution.level.Level;
@@ -54,6 +61,11 @@ public final class GameManager {
     private boolean tutorial;
 
     /**
+     * Ember csatlakozott-e.
+     */
+    private boolean humanJoined;
+
+    /**
      * Az osztály privát konstruktora.
      */
     private GameManager() {
@@ -73,6 +85,7 @@ public final class GameManager {
         gameState = GameState.INIT;
         currentTick = 0;
         characters = new HashMap<>();
+        humanJoined = false;
     }
 
     /**
@@ -105,11 +118,139 @@ public final class GameManager {
      * @return a karakter pozíciója a pályán, vagy (Integer.MAX_VALUE, Integer.MAX_VALUE) ha nem sikerült hozzáadni
      */
     public Position joinCharacter(String name, boolean player) {
-        throw new NotImplementedException();
+        if (gameState != GameState.LOADED && gameState != GameState.READY) {
+            return new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        }
+        if (characters.containsKey(name)) {
+            return new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        }
+        if (player && humanJoined) {
+            return new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        }
+        Position position = generatePosition();
+        if (position.equals(new Position(Integer.MAX_VALUE, Integer.MAX_VALUE))) {
+            return position;
+        }
+
+        if (player) {
+            humanJoined = true;
+        }
+        if (gameState == GameState.LOADED && humanJoined && !characters.isEmpty()) {
+            gameState = GameState.READY;
+        }
+
+        BaseCharacter character = new Character(name, position);
+        characters.put(name, character);
+        initInventory(character);
+        return position;
+    }
+
+    /**
+     * Játékos inventoryjának inicializálása.
+     * @param character a karakter, aminek az inventoryját inicializáljuk
+     */
+    public void initInventory(BaseCharacter character) {
+        BaseInventory inventory = character.getInventory();
+        for (int i = 0; i < 4; i++) {
+            switch (random.nextInt(5)) {
+                case 0:
+                    inventory.addItem(new ItemLog(1));
+                    break;
+                case 1:
+                    inventory.addItem(new ItemStone(1));
+                    break;
+                case 2:
+                    inventory.addItem(new ItemTwig(1));
+                    break;
+                case 3:
+                    inventory.addItem(new ItemRawBerry(1));
+                    break;
+                case 4:
+                    inventory.addItem(new ItemRawCarrot(1));
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Egy csatlakozó játékos elhelyezése.
+     * @return a karakter pozíciója a pályán, vagy (Integer.MAX_VALUE, Integer.MAX_VALUE) ha nem sikerült hozzáadni
+     */
+    public Position generatePosition() {
+        if (level == null || characters == null || random == null) {
+            return new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        }
+        return generatePosition(level, characters, random);
+    }
+
+    /**
+     * Egy csatlakozó játékos elhelyezése.
+     * @param level a pálya
+     * @param characters a karakterek
+     * @param random a random objektum
+     * @return a karakter pozíciója a pályán, vagy (Integer.MAX_VALUE, Integer.MAX_VALUE) ha nem sikerült hozzáadni
+     */
+    public static Position generatePosition(BaseField[][] level, Map<String, BaseCharacter> characters, Random random) {
+        boolean[][] possibleLocations = new boolean[level.length][level[0].length];
+        int found = 0;
+
+        for (int d = 50; d > 0; d -= 5) {
+            possibleLocations = new boolean[level.length][level[0].length];
+            found = 0;
+
+            for (int i = 0; i < level.length; i++) {
+                for (int j = 0; j < level[0].length; j++) {
+                    possibleLocations[i][j] = ((Field)level[i][j]).isEmpty();
+                    if (possibleLocations[i][j]) {
+                        found++;
                     }
                 }
             }
+
+            for (BaseCharacter character : characters.values()) {
+                Position position = character.getCurrentPosition().getNearestWholePosition();
+                int posX = (int) position.getX();
+                int posY = (int) position.getY();
+
+
+                for (int i = posX - d; i <= posX + d; i++) {
+                    if (i < 0 || i >= level.length) {
+                        continue;
+                    }
+                    for (int j = posY - d; j <= posY + d; j++) {
+                        if (j < 0 || j >= level[0].length) {
+                            continue;
+                        }
+                        if (possibleLocations[i][j] && position.distanceTo(new Position(i, j)) < d) {
+                            possibleLocations[i][j] = false;
+                            found--;
+                        }
+                    }
+                }
+            }
+
+            if (found > 0) {
+                break;
+            }
         }
+
+        if (found <= 0) {
+            return new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        }
+
+        int index = random.nextInt(found);
+        for (int i = 0; i < level.length; i++) {
+            for (int j = 0; j < level[0].length; j++) {
+                if (possibleLocations[i][j]) {
+                    if (index == 0) {
+                        return new Position(i, j);
+                    }
+                    index--;
+                }
+            }
+        }
+
+        return new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
     }
 
     /**
