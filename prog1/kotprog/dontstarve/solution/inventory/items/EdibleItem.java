@@ -7,7 +7,7 @@ public abstract class EdibleItem extends AbstractItem {
      * @param type   a tárgy típusa
      * @param amount az item mennyisége
      */
-    public EdibleItem(ItemType type, int amount) {
-        super(type, amount);
+    public EdibleItem(ItemType type, int maxStackAmount, int amount) {
+        super(type, maxStackAmount, amount);
     }
 }

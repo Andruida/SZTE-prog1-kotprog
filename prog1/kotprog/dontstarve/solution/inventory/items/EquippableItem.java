@@ -16,7 +16,7 @@ public abstract class EquippableItem extends AbstractItem {
      * @param type   az item típusa
      */
     public EquippableItem(ItemType type) {
-        super(type, 1);
+        super(type, 1, 1);
         durability = 1;
     }
 

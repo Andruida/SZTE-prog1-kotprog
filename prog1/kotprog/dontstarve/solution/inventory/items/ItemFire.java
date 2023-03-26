@@ -8,12 +8,7 @@ public class ItemFire extends AbstractItem {
      * Konstruktor, amellyel a tárgy létrehozható.
      */
     public ItemFire() {
-        super(ItemType.FIRE, 1);
-    }
-
-    @Override
-    public int getMaxStackAmount() {
-        return 1;
+        super(ItemType.FIRE, 1, 1);
     }
 
     @Override

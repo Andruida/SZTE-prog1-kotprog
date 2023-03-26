@@ -10,12 +10,7 @@ public class ItemCookedBerry extends EdibleItem {
      * @param amount az item mennyisége
      */
     public ItemCookedBerry(int amount) {
-        super(ItemType.COOKED_BERRY, amount);
-    }
-
-    @Override
-    public int getMaxStackAmount() {
-        return 10;
+        super(ItemType.COOKED_BERRY, 10, amount);
     }
 
     @Override

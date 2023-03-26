@@ -8,8 +8,8 @@ public abstract class CookableItem extends EdibleItem {
      * @param type   a tárgy típusa
      * @param amount az item mennyisége
      */
-    public CookableItem(ItemType type, int amount) {
-        super(type, amount);
+    public CookableItem(ItemType type, int maxStackAmount, int amount) {
+        super(type, maxStackAmount, amount);
     }
 
     /**

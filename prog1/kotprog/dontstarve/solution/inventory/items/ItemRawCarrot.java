@@ -10,12 +10,7 @@ public class ItemRawCarrot extends CookableItem {
      * @param amount az item mennyisége
      */
     public ItemRawCarrot(int amount) {
-        super(ItemType.RAW_CARROT, amount);
-    }
-
-    @Override
-    public int getMaxStackAmount() {
-        return 10;
+        super(ItemType.RAW_CARROT, 10, amount);
     }
 
     @Override

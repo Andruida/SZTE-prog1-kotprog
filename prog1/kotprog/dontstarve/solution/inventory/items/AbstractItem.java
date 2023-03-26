@@ -17,12 +17,18 @@ public abstract class AbstractItem implements Cloneable {
     private int amount;
 
     /**
+     * Az item maximális mennyisége egy slot-ban.
+     */
+    private int maxStackAmount;
+
+    /**
      * Konstruktor, amellyel a tárgy létrehozható.
      * @param type az item típusa
      * @param amount az item mennyisége
      */
-    public AbstractItem(ItemType type, int amount) {
+    public AbstractItem(ItemType type, int maxStackAmount, int amount) {
         this.type = type;
+        this.maxStackAmount = maxStackAmount;
         setAmount(amount);
     }
 
@@ -62,7 +68,9 @@ public abstract class AbstractItem implements Cloneable {
      * Megadja az item maximális mennyiségét egy slot-ban.
      * @return az item maximális mennyisége egy slot-ban
      */
-    public abstract int getMaxStackAmount();
+    public int getMaxStackAmount() {
+        return maxStackAmount;
+    }
 
     @Override
     public abstract AbstractItem clone();

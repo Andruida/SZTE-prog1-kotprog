@@ -10,12 +10,7 @@ public class ItemLog extends AbstractItem {
      * @param amount az item mennyisége
      */
     public ItemLog(int amount) {
-        super(ItemType.LOG, amount);
-    }
-
-    @Override
-    public int getMaxStackAmount() {
-        return 15;
+        super(ItemType.LOG, 15, amount);
     }
 
     @Override

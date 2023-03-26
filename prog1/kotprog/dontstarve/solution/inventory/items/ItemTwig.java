@@ -10,12 +10,7 @@ public class ItemTwig extends AbstractItem {
      * @param amount az item mennyisége
      */
     public ItemTwig(int amount) {
-        super(ItemType.TWIG, amount);
-    }
-
-    @Override
-    public int getMaxStackAmount() {
-        return 20;
+        super(ItemType.TWIG, 20, amount);
     }
 
     @Override

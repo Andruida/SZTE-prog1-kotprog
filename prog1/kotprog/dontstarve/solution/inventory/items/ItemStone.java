@@ -10,12 +10,7 @@ public class ItemStone extends AbstractItem {
      * @param amount az item mennyisége
      */
     public ItemStone(int amount) {
-        super(ItemType.STONE, amount);
-    }
-
-    @Override
-    public int getMaxStackAmount() {
-        return 10;
+        super(ItemType.STONE, 10, amount);
     }
 
     @Override

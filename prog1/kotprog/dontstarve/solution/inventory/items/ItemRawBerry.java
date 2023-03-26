@@ -10,12 +10,7 @@ public class ItemRawBerry extends CookableItem {
      * @param amount az item mennyisége
      */
     public ItemRawBerry(int amount) {
-        super(ItemType.RAW_BERRY, amount);
-    }
-
-    @Override
-    public int getMaxStackAmount() {
-        return 10;
+        super(ItemType.RAW_BERRY, 10, amount);
     }
 
     @Override
