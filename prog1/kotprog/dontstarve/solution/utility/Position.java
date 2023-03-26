@@ -1,5 +1,8 @@
 package prog1.kotprog.dontstarve.solution.utility;
 
+import prog1.kotprog.dontstarve.solution.GameManager;
+import prog1.kotprog.dontstarve.solution.level.BaseField;
+
 /**
  * Egy 2 dimenziós (x, y) koordinátát leíró osztály.
  */
@@ -31,6 +34,14 @@ public class Position {
      */
     public Position getNearestWholePosition() {
         return new Position(Math.round(x), Math.round(y));
+    }
+
+    /**
+     * Az aktuális pozícióhoz legközelebbi mező lekérdezése.
+     * @return a kiszámolt mező
+     */
+    public BaseField getNearestField() {
+        return GameManager.getInstance().getField((int) Math.round(x), (int) Math.round(y));
     }
 
     /**

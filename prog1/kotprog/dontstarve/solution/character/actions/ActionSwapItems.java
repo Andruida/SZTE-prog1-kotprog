@@ -1,5 +1,7 @@
 package prog1.kotprog.dontstarve.solution.character.actions;
 
+import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
+
 /**
  * A tárgyak cseréje akció leírására szolgáló osztály: az inventory-ban két itemet megcserélünk.
  */
@@ -40,5 +42,11 @@ public class ActionSwapItems extends Action {
      */
     public int getIndex2() {
         return index2;
+    }
+
+    @Override
+    public void execute(MutableCharacter executor) {
+        executor.getInventory().swapItems(index1, index2);
+        super.execute(executor);
     }
 }

@@ -1,5 +1,7 @@
 package prog1.kotprog.dontstarve.solution.character.actions;
 
+import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
+
 /**
  * A tárgy mozgatása akció leírására szolgáló osztály: a tárgyat az inventory-ban egy másik pozícióra mozgatjuk.
  */
@@ -39,5 +41,11 @@ public class ActionMoveItem extends Action {
      */
     public int getNewIndex() {
         return newIndex;
+    }
+
+    @Override
+    public void execute(MutableCharacter executor) {
+        executor.getInventory().moveItem(oldIndex, newIndex);
+        super.execute(executor);
     }
 }

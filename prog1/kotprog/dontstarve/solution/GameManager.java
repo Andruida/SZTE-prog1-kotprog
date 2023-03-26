@@ -2,6 +2,7 @@ package prog1.kotprog.dontstarve.solution;
 
 import prog1.kotprog.dontstarve.solution.character.BaseCharacter;
 import prog1.kotprog.dontstarve.solution.character.Character;
+import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
 import prog1.kotprog.dontstarve.solution.character.actions.Action;
 import prog1.kotprog.dontstarve.solution.exceptions.NotImplementedException;
 import prog1.kotprog.dontstarve.solution.inventory.BaseInventory;
@@ -61,18 +62,15 @@ public final class GameManager {
     private boolean tutorial;
 
     /**
-     * Ember csatlakozott-e.
+     * Emberi játékos neve.
      */
-    private boolean humanJoined;
+    private String humanPlayerName;
 
     /**
      * Az osztály privát konstruktora.
      */
     private GameManager() {
-        tutorial = false;
-        gameState = GameState.INIT;
-        currentTick = 0;
-        characters = new HashMap<>();
+        reset();
     }
 
     /**
@@ -85,7 +83,7 @@ public final class GameManager {
         gameState = GameState.INIT;
         currentTick = 0;
         characters = new HashMap<>();
-        humanJoined = false;
+        humanPlayerName = null;
     }
 
     /**
@@ -124,7 +122,7 @@ public final class GameManager {
         if (characters.containsKey(name)) {
             return new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
         }
-        if (player && humanJoined) {
+        if (player && humanPlayerName != null) {
             return new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
         }
         Position position = generatePosition();
@@ -133,9 +131,9 @@ public final class GameManager {
         }
 
         if (player) {
-            humanJoined = true;
+            humanPlayerName = name;
         }
-        if (gameState == GameState.LOADED && humanJoined && !characters.isEmpty()) {
+        if (gameState == GameState.LOADED && humanPlayerName != null && !characters.isEmpty()) {
             gameState = GameState.READY;
         }
 
@@ -180,17 +178,6 @@ public final class GameManager {
         if (level == null || characters == null || random == null) {
             return new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
         }
-        return generatePosition(level, characters, random);
-    }
-
-    /**
-     * Egy csatlakozó játékos elhelyezése.
-     * @param level a pálya
-     * @param characters a karakterek
-     * @param random a random objektum
-     * @return a karakter pozíciója a pályán, vagy (Integer.MAX_VALUE, Integer.MAX_VALUE) ha nem sikerült hozzáadni
-     */
-    public static Position generatePosition(BaseField[][] level, Map<String, BaseCharacter> characters, Random random) {
         boolean[][] possibleLocations = new boolean[level.length][level[0].length];
         int found = 0;
 
@@ -332,6 +319,26 @@ public final class GameManager {
      * @param action az emberi játékos által végrehajtani kívánt akció
      */
     public void tick(Action action) {
+        if (gameState != GameState.RUNNING) {
+            return;
+        }
+        if (action == null) {
+            return;
+        }
+
+        MutableCharacter humanPlayer = (MutableCharacter) characters.get(humanPlayerName);
+        action.execute(humanPlayer);
+
+        for (BaseCharacter character : characters.values()) {
+            if (character.getHp() <= 0) {
+                continue;
+            }
+            if (!(character instanceof MutableCharacter)) {
+                continue;
+            }
+            ((MutableCharacter)character).tick();
+        }
+
         currentTick++;
     }
 

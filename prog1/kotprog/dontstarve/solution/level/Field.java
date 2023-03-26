@@ -9,7 +9,7 @@ import prog1.kotprog.dontstarve.solution.inventory.items.ItemRawCarrot;
 import prog1.kotprog.dontstarve.solution.inventory.items.ItemTwig;
 import prog1.kotprog.dontstarve.solution.inventory.items.ItemType;
 
-public class Field implements BaseField {
+public class Field implements MutableField {
 
     /**
      * A mezőn található-e víz.
@@ -134,6 +134,22 @@ public class Field implements BaseField {
     @Override
     public AbstractItem[] items() {
         return itemList.toArray(new AbstractItem[itemList.size()]);
+    }
+
+    @Override
+    public void addItem(AbstractItem item) {
+        if (item == null) {
+            return;
+        }
+        itemList.add(item);
+    }
+
+    @Override
+    public AbstractItem pickupItem() {
+        if (itemList.isEmpty()) {
+            return null;
+        }
+        return itemList.remove(0);
     }
 
 }

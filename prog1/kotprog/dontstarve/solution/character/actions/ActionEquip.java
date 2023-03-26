@@ -1,5 +1,7 @@
 package prog1.kotprog.dontstarve.solution.character.actions;
 
+import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
+
 /**
  * A tárgy kézbe vétele akció leírására szolgáló osztály: egy inventory-ban lévő felvehető tárgy kézbe vétele.
  */
@@ -25,5 +27,11 @@ public class ActionEquip extends Action {
      */
     public int getIndex() {
         return index;
+    }
+
+    @Override
+    public void execute(MutableCharacter executor) {
+        executor.getInventory().equipItem(index);
+        super.execute(executor);
     }
 }

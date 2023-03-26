@@ -1,5 +1,7 @@
 package prog1.kotprog.dontstarve.solution.character.actions;
 
+import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
+
 /**
  * Az étel elfogyasztása akció leírására szolgáló osztály: egy étel elfogyasztása az inventory-ból.
  */
@@ -25,5 +27,11 @@ public class ActionEat extends Action {
      */
     public int getIndex() {
         return index;
+    }
+
+    @Override
+    public void execute(MutableCharacter executor) {
+        executor.getInventory().eatItem(index);
+        super.execute(executor);
     }
 }

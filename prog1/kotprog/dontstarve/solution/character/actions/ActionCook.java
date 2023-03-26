@@ -1,5 +1,7 @@
 package prog1.kotprog.dontstarve.solution.character.actions;
 
+import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
+
 /**
  * A főzés akció leírására szolgáló osztály: egy item megfőzése.
  */
@@ -25,5 +27,11 @@ public class ActionCook extends Action {
      */
     public int getIndex() {
         return index;
+    }
+
+    @Override
+    public void execute(MutableCharacter executor) {
+        executor.getInventory().cookItem(index);
+        super.execute(executor);
     }
 }

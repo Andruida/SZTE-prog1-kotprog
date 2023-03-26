@@ -1,5 +1,6 @@
 package prog1.kotprog.dontstarve.solution.character.actions;
 
+import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
 import prog1.kotprog.dontstarve.solution.utility.Direction;
 
 /**
@@ -27,5 +28,11 @@ public class ActionStep extends Action {
      */
     public Direction getDirection() {
         return direction;
+    }
+
+    @Override
+    public void execute(MutableCharacter executor) {
+        executor.step(direction);
+        super.execute(executor);
     }
 }

@@ -1,5 +1,7 @@
 package prog1.kotprog.dontstarve.solution.character.actions;
 
+import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
+
 /**
  * A karakterek egy akciójának leírására szolgáló osztály.
  */
@@ -24,5 +26,9 @@ public abstract class Action {
      */
     public ActionType getType() {
         return type;
+    }
+
+    public void execute(MutableCharacter executor) {
+        executor.setLastAction(this);
     }
 }

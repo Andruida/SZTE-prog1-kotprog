@@ -19,7 +19,7 @@ public abstract class AbstractItem implements Cloneable {
     /**
      * Az item maximális mennyisége egy slot-ban.
      */
-    private int maxStackAmount;
+    private final int maxStackAmount;
 
     /**
      * Konstruktor, amellyel a tárgy létrehozható.

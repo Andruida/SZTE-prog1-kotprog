@@ -1,5 +1,7 @@
 package prog1.kotprog.dontstarve.solution.character.actions;
 
+import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
+
 /**
  * A tárgyak kombinálása akció leírására szolgáló osztály: két item egyesítése az inventory-ban.
  */
@@ -40,5 +42,11 @@ public class ActionCombineItems extends Action {
      */
     public int getIndex2() {
         return index2;
+    }
+
+    @Override
+    public void execute(MutableCharacter executor) {
+        executor.getInventory().combineItems(index1, index2);
+        super.execute(executor);
     }
 }
