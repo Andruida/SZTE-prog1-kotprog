@@ -194,7 +194,7 @@ class JoinCharacterTest {
     void joinTwoCharactersSmallLevel() {
         setUpLevel("/level02.png");
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             Position position = gameManager.joinCharacter("player" + i, false);
             assertNotNull(position);
             assertFalse(position.equals(failed));
@@ -208,7 +208,7 @@ class JoinCharacterTest {
         assertNotNull(positionN);
         assertTrue(positionN.equals(failed));
 
-        assertEquals(4, gameManager.remainingCharacters());
+        assertEquals(5, gameManager.remainingCharacters());
 
     }
 
