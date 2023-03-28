@@ -83,9 +83,6 @@ public class FieldTest {
         assertFalse(field.hasBerry());
         assertFalse(field.hasCarrot());
         assertTrue(field.hasTwig());
-
-        assertEquals(1, field.items().length);
-        assertEquals(ItemType.TWIG, field.items()[0].getType());
     }
 
     @Test
@@ -100,8 +97,6 @@ public class FieldTest {
         assertFalse(field.hasCarrot());
         assertFalse(field.hasTwig());
 
-        assertEquals(1, field.items().length);
-        assertEquals(ItemType.RAW_BERRY, field.items()[0].getType());
     }
 
     @Test
@@ -115,8 +110,5 @@ public class FieldTest {
         assertFalse(field.hasBerry());
         assertTrue(field.hasCarrot());
         assertFalse(field.hasTwig());
-
-        assertEquals(1, field.items().length);
-        assertEquals(ItemType.RAW_CARROT, field.items()[0].getType());
     }
 }

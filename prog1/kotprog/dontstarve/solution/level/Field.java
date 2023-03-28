@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import prog1.kotprog.dontstarve.solution.inventory.items.AbstractItem;
-import prog1.kotprog.dontstarve.solution.inventory.items.ItemRawBerry;
-import prog1.kotprog.dontstarve.solution.inventory.items.ItemRawCarrot;
-import prog1.kotprog.dontstarve.solution.inventory.items.ItemTwig;
-import prog1.kotprog.dontstarve.solution.inventory.items.ItemType;
 
 public class Field implements MutableField {
 
@@ -27,9 +23,25 @@ public class Field implements MutableField {
     private boolean stone;
 
     /**
-     * A mezőn található-e tűz.
+     * A mezőn található-e gally.
      */
-    private boolean fire;
+    private boolean twig;
+
+    /**
+     * A mezőn található-e bogyó.
+     */
+    private boolean berry;
+
+    /**
+     * A mezőn található-e répa.
+     */
+    private boolean carrot;
+
+    /**
+     * A mezőn tűz élettartama.<br>
+     * Ha 0, akkor nincs tűz.
+     */
+    private int fire;
 
     /**
      * A mezőn található itemek.
@@ -44,7 +56,10 @@ public class Field implements MutableField {
         water = false;
         tree = false;
         stone = false;
-        fire = false;
+        twig = false;
+        berry = false;
+        carrot = false;
+        fire = 0;
         itemList = new ArrayList<>();
 
 
@@ -59,13 +74,13 @@ public class Field implements MutableField {
                 stone = true;
                 break;
             case MapColors.TWIG:
-                itemList.add(new ItemTwig(1));
+                twig = true;
                 break;
             case MapColors.BERRY:
-                itemList.add(new ItemRawBerry(1));
+                berry = true;
                 break;
             case MapColors.CARROT:
-                itemList.add(new ItemRawCarrot(1));
+                carrot = true;
                 break;
             case MapColors.EMPTY:
             default:
@@ -73,27 +88,31 @@ public class Field implements MutableField {
         }
     }
 
-    /**
-     * Metódus, ami megadja, hogy az adott típusú itemből van-e a mezőn.
-     *
-     * @param itemType az item, amiről lekérdezzük, hogy van-e a mezőn
-     * @return true, ha van ilyen item a mezőn, false, ha nincs
-     */
-    private boolean hasItem(ItemType itemType) {
-        for (AbstractItem i : itemList) {
-            if (i.getType() == itemType) {
-                return true;
-            }
-        }
-        return false;
-    }
+    // /**
+    //  * Metódus, ami megadja, hogy az adott típusú itemből van-e a mezőn.
+    //  *
+    //  * @param itemType az item, amiről lekérdezzük, hogy van-e a mezőn
+    //  * @return true, ha van ilyen item a mezőn, false, ha nincs
+    //  */
+    // private boolean hasItem(ItemType itemType) {
+    //     for (AbstractItem i : itemList) {
+    //         if (i.getType() == itemType) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
-    /**
-     * Metódus, ami megadja, hogy a mező üres-e.
-     * @return true, ha üres, false, ha nem
-     */
+    @Override
     public boolean isEmpty() {
-        return !water && !tree && !stone && !fire && itemList.isEmpty();
+        return !water
+            && !tree
+            && !stone
+            &&  fire <= 0
+            && !berry
+            && !carrot
+            && !twig
+            &&  itemList.isEmpty();
     }
 
     @Override
@@ -113,22 +132,22 @@ public class Field implements MutableField {
 
     @Override
     public boolean hasTwig() {
-        return hasItem(ItemType.TWIG);
+        return twig;
     }
 
     @Override
     public boolean hasBerry() {
-        return hasItem(ItemType.RAW_BERRY);
+        return berry;
     }
 
     @Override
     public boolean hasCarrot() {
-        return hasItem(ItemType.RAW_CARROT);
+        return carrot;
     }
 
     @Override
     public boolean hasFire() {
-        return fire;
+        return fire > 0;
     }
 
     @Override
@@ -150,6 +169,43 @@ public class Field implements MutableField {
             return null;
         }
         return itemList.remove(0);
+    }
+
+    @Override
+    public void setFire(boolean state) {
+        fire = state ? 60 : 0;
+    }
+
+    @Override
+    public void setStone(boolean state) {
+        stone = state;
+    }
+
+    @Override
+    public void setTree(boolean state) {
+        tree = state;
+    }
+
+    @Override
+    public void setTwig(boolean state) {
+        twig = state;
+    }
+
+    @Override
+    public void setBerry(boolean state) {
+        berry = state;
+    }
+
+    @Override
+    public void setCarrot(boolean state) {
+        carrot = state;
+    }
+
+    @Override
+    public void tick() {
+        if (fire > 0) {
+            fire--;
+        }
     }
 
 }

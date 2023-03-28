@@ -1,11 +1,14 @@
 package prog1.kotprog.dontstarve.solution.inventory;
 
+import java.util.Map;
+
 import prog1.kotprog.dontstarve.solution.exceptions.InvalidStateException;
 import prog1.kotprog.dontstarve.solution.inventory.items.AbstractItem;
 import prog1.kotprog.dontstarve.solution.inventory.items.CookableItem;
 import prog1.kotprog.dontstarve.solution.inventory.items.EdibleItem;
 import prog1.kotprog.dontstarve.solution.inventory.items.EquippableItem;
 import prog1.kotprog.dontstarve.solution.inventory.items.ItemType;
+import prog1.kotprog.dontstarve.solution.level.MutableField;
 
 /**
  * Az inventory osztály, amely a játékos tárgyait tárolja.
@@ -42,21 +45,21 @@ public class Inventory implements BaseInventory {
         }
 
         // van-e ugyanolyan típusú item?
-        for (int i = 0; i < slots.length; i++) {
-            if (slots[i] == null || slots[i].getType() != item.getType() ||
-                slots[i].getAmount() == slots[i].getMaxStackAmount()
+        for (AbstractItem slot : slots) {
+            if (slot == null || slot.getType() != item.getType() ||
+                slot.getAmount() == slot.getMaxStackAmount()
             ) {
                 continue;
             }
 
-            if (slots[i].getAmount() + item.getAmount() <= slots[i].getMaxStackAmount()) {
-                slots[i].addAmount(item.getAmount());
+            if (slot.getAmount() + item.getAmount() <= slot.getMaxStackAmount()) {
+                slot.addAmount(item.getAmount());
                 itemRef.setAmount(0);
                 return true;
             }
 
-            int amount = slots[i].getMaxStackAmount() - slots[i].getAmount();
-            slots[i].addAmount(amount);
+            int amount = slot.getMaxStackAmount() - slot.getAmount();
+            slot.addAmount(amount);
             AbstractItem newItem = item.clone();
             newItem.addAmount(-amount);
             itemRef.setAmount(newItem.getAmount());
@@ -286,6 +289,50 @@ public class Inventory implements BaseInventory {
      */
     private boolean indexInvalidOrNOTNull(int index) {
         return index < 0 || index >= slots.length || slots[index] != null;
+    }
+
+    @Override
+    public boolean craftItem(ItemType itemType, MutableField field) {
+        if (itemType == null || field == null) {
+            return false;
+        }
+        Map<ItemType, Integer> recipe = itemType.getRecipe();
+        if (recipe == null) {
+            return false;
+        }
+
+        if (itemType == ItemType.FIRE && !field.isEmpty()) {
+            return false;
+        }
+
+        for (Map.Entry<ItemType, Integer> entry : recipe.entrySet()) {
+            if (getItemAmount(entry.getKey()) < entry.getValue()) {
+                return false;
+            }
+        }
+
+        boolean success = true;
+        for (Map.Entry<ItemType, Integer> entry : recipe.entrySet()) {
+            if (!removeItem(entry.getKey(), entry.getValue())) {
+                success = false;
+            }
+        }
+        if (!success) {
+            return false;
+        }
+
+        if (itemType == ItemType.FIRE) {
+            field.setFire(true);
+        } else {
+            AbstractItem item = itemType.instantiate();
+            boolean addSuccess = addItem(item);
+            if (!addSuccess) {
+                field.addItem(item);
+            }
+        }
+
+
+        return true;
     }
 
 }

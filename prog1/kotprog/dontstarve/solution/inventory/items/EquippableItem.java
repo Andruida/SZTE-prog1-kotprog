@@ -8,7 +8,7 @@ public abstract class EquippableItem extends AbstractItem {
     /**
      * A tárgy állapota.
      */
-    private float durability;
+    protected int durability;
 
     /**
      * Konstruktor, amellyel a tárgy létrehozható.
@@ -17,16 +17,13 @@ public abstract class EquippableItem extends AbstractItem {
      */
     public EquippableItem(ItemType type) {
         super(type, 1, 1);
-        durability = 1;
     }
 
     /**
      * Megadja, hogy milyen állapotban van a tárgy.
      * @return a tárgy használatlansága, %-ban (100%: tökéletes állapot)
      */
-    public float percentage() {
-        return durability*100;
-    }
+    public abstract float percentage();
 
     @Override
     public int getMaxStackAmount() {

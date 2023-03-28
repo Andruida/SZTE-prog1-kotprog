@@ -12,6 +12,7 @@ import prog1.kotprog.dontstarve.solution.inventory.items.ItemRawCarrot;
 import prog1.kotprog.dontstarve.solution.inventory.items.ItemStone;
 import prog1.kotprog.dontstarve.solution.inventory.items.ItemTwig;
 import prog1.kotprog.dontstarve.solution.level.BaseField;
+import prog1.kotprog.dontstarve.solution.level.MutableField;
 import prog1.kotprog.dontstarve.solution.level.Field;
 import prog1.kotprog.dontstarve.solution.level.Level;
 import prog1.kotprog.dontstarve.solution.utility.GameState;
@@ -339,6 +340,11 @@ public final class GameManager {
             ((MutableCharacter)character).tick();
         }
 
+        for (BaseField[] row : level) {
+            for (BaseField field : row) {
+                ((MutableField)field).tick();
+            }
+        }
         currentTick++;
     }
 

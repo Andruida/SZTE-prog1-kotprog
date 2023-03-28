@@ -56,4 +56,10 @@ public interface BaseField {
      * @return a mezőn lévő tárgyak
      */
     AbstractItem[] items();
+
+    /**
+     * Metódus, ami megadja, hogy a mező üres-e.
+     * @return true, ha üres, false, ha nem
+     */
+    boolean isEmpty();
 }

@@ -12,9 +12,4 @@ public class ItemStone extends AbstractItem {
     public ItemStone(int amount) {
         super(ItemType.STONE, 10, amount);
     }
-
-    @Override
-    public ItemStone clone() {
-        return new ItemStone(getAmount());
-    }
 }

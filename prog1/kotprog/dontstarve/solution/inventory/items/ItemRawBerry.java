@@ -14,11 +14,6 @@ public class ItemRawBerry extends CookableItem {
     }
 
     @Override
-    public ItemRawBerry clone() {
-        return new ItemRawBerry(getAmount());
-    }
-
-    @Override
     public EdibleItem cook() {
         return new ItemCookedBerry(getAmount());
     }

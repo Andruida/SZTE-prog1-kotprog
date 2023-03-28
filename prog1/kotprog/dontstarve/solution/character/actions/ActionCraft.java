@@ -1,6 +1,8 @@
 package prog1.kotprog.dontstarve.solution.character.actions;
 
+import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
 import prog1.kotprog.dontstarve.solution.inventory.items.ItemType;
+import prog1.kotprog.dontstarve.solution.level.MutableField;
 
 /**
  * A kraftolás akció leírására szolgáló osztály: adott típusú item kraftolása.
@@ -27,5 +29,11 @@ public class ActionCraft extends Action {
      */
     public ItemType getItemType() {
         return itemType;
+    }
+
+    @Override
+    public void execute(MutableCharacter executor) {
+        executor.getInventory().craftItem(itemType, (MutableField)executor.getCurrentPosition().getNearestField());
+        super.execute(executor);
     }
 }

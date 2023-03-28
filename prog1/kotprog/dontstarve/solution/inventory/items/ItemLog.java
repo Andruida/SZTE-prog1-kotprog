@@ -12,9 +12,4 @@ public class ItemLog extends AbstractItem {
     public ItemLog(int amount) {
         super(ItemType.LOG, 15, amount);
     }
-
-    @Override
-    public ItemLog clone() {
-        return new ItemLog(getAmount());
-    }
 }

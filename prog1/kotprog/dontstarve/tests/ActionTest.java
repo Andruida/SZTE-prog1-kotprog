@@ -4,15 +4,11 @@ import org.junit.jupiter.api.*;
 
 import prog1.kotprog.dontstarve.solution.GameManager;
 import prog1.kotprog.dontstarve.solution.character.BaseCharacter;
-import prog1.kotprog.dontstarve.solution.character.Character;
 import prog1.kotprog.dontstarve.solution.character.actions.Action;
 import prog1.kotprog.dontstarve.solution.character.actions.ActionDropItem;
 import prog1.kotprog.dontstarve.solution.inventory.BaseInventory;
-import prog1.kotprog.dontstarve.solution.inventory.Inventory;
 import prog1.kotprog.dontstarve.solution.inventory.items.*;
 import prog1.kotprog.dontstarve.solution.level.Level;
-import prog1.kotprog.dontstarve.solution.utility.Position;
-
 import static org.junit.Assume.assumeNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;

@@ -12,9 +12,4 @@ public class ItemTwig extends AbstractItem {
     public ItemTwig(int amount) {
         super(ItemType.TWIG, 20, amount);
     }
-
-    @Override
-    public ItemTwig clone() {
-        return new ItemTwig(getAmount());
-    }
 }

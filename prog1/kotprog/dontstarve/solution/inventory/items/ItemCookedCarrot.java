@@ -12,9 +12,4 @@ public class ItemCookedCarrot extends EdibleItem {
     public ItemCookedCarrot(int amount) {
         super(ItemType.COOKED_CARROT, 10, amount);
     }
-
-    @Override
-    public ItemCookedCarrot clone() {
-        return new ItemCookedCarrot(getAmount());
-    }
 }

@@ -73,7 +73,9 @@ public abstract class AbstractItem implements Cloneable {
     }
 
     @Override
-    public abstract AbstractItem clone();
+    public AbstractItem clone() {
+        return getType().instantiate(getAmount());
+    }
 
     // @Override
     // public boolean equals(Object obj) {

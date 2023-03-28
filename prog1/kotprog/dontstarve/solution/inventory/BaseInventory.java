@@ -3,6 +3,7 @@ package prog1.kotprog.dontstarve.solution.inventory;
 import prog1.kotprog.dontstarve.solution.inventory.items.EquippableItem;
 import prog1.kotprog.dontstarve.solution.inventory.items.AbstractItem;
 import prog1.kotprog.dontstarve.solution.inventory.items.ItemType;
+import prog1.kotprog.dontstarve.solution.level.MutableField;
 
 /**
  * Egy egyszerű Inventory-t leíró interface.
@@ -124,4 +125,12 @@ public interface BaseInventory {
      * @return az adott sloton lévő tárgy
      */
     AbstractItem getItem(int index);
+
+    /**
+     * Adott Item elkészítése.
+     * @param itemType a készítendő item típusa
+     * @param field a mező, amin a kraftolás zajlik
+     * @return true, ha sikerült elkészíteni az itemet, false egyébként
+     */
+    boolean craftItem(ItemType itemType, MutableField field);
 }

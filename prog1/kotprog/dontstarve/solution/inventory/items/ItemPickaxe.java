@@ -4,6 +4,12 @@ package prog1.kotprog.dontstarve.solution.inventory.items;
  * A csákány item leírására szolgáló osztály.
  */
 public class ItemPickaxe extends EquippableItem {
+
+    /**
+     * A tárgy maximális állapota.
+     */
+    private static final int MAX_DURABILITY = 30;
+
     /**
      * Konstruktor, amellyel a tárgy létrehozható.
      */
@@ -12,7 +18,7 @@ public class ItemPickaxe extends EquippableItem {
     }
 
     @Override
-    public ItemPickaxe clone() {
-        return new ItemPickaxe();
+    public float percentage() {
+        return (float)durability / MAX_DURABILITY * 100;
     }
 }

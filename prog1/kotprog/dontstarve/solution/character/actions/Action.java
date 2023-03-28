@@ -28,6 +28,10 @@ public abstract class Action {
         return type;
     }
 
+    /**
+     * Az akció végrehajtása.
+     * @param executor a végrehajtó karakter
+     */
     public void execute(MutableCharacter executor) {
         executor.setLastAction(this);
     }
