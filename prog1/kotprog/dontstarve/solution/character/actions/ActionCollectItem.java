@@ -25,7 +25,7 @@ public class ActionCollectItem extends Action {
         AbstractItem item = field.pickupItem();
         boolean success = executor.getInventory().addItem(item);
         if (!success) {
-            ((MutableField) executor.getCurrentPosition().getNearestField()).addItem(item);
+            field.addItem(item);
         }
         super.execute(executor);
     }

@@ -4,6 +4,7 @@ import prog1.kotprog.dontstarve.solution.character.BaseCharacter;
 import prog1.kotprog.dontstarve.solution.character.Character;
 import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
 import prog1.kotprog.dontstarve.solution.character.actions.Action;
+import prog1.kotprog.dontstarve.solution.character.actions.ActionNone;
 import prog1.kotprog.dontstarve.solution.exceptions.NotImplementedException;
 import prog1.kotprog.dontstarve.solution.inventory.BaseInventory;
 import prog1.kotprog.dontstarve.solution.inventory.items.ItemLog;
@@ -324,7 +325,7 @@ public final class GameManager {
             return;
         }
         if (action == null) {
-            return;
+            action = new ActionNone();
         }
 
         MutableCharacter humanPlayer = (MutableCharacter) characters.get(humanPlayerName);

@@ -51,4 +51,10 @@ public interface MutableField extends BaseField {
      */
     void setTwig(boolean state);
 
+    /**
+     * Interakcióba lépés a mezővel.
+     * @return az interakcióból származó tárgy. (null, ha több kör kell)
+     */
+    AbstractItem interact();
+
 }
