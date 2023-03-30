@@ -15,6 +15,7 @@ public class ItemAxe extends EquippableItem {
      */
     public ItemAxe() {
         super(ItemType.AXE);
+        durability = MAX_DURABILITY;
     }
 
     @Override

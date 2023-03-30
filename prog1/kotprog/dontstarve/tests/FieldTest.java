@@ -1,5 +1,8 @@
 package prog1.kotprog.dontstarve.tests;
 
+import static org.junit.Assume.assumeFalse;
+import static org.junit.Assume.assumeTrue;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -7,6 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import prog1.kotprog.dontstarve.solution.inventory.items.AbstractItem;
+import prog1.kotprog.dontstarve.solution.inventory.items.EquippableItem;
+import prog1.kotprog.dontstarve.solution.inventory.items.ItemAxe;
+import prog1.kotprog.dontstarve.solution.inventory.items.ItemPickaxe;
+import prog1.kotprog.dontstarve.solution.inventory.items.ItemType;
 import prog1.kotprog.dontstarve.solution.level.Field;
 import prog1.kotprog.dontstarve.solution.level.MapColors;
 
@@ -109,5 +117,114 @@ public class FieldTest {
         assertFalse(field.hasBerry());
         assertTrue(field.hasCarrot());
         assertFalse(field.hasTwig());
+    }
+
+    @Test
+    @DisplayName("Field twig collect with tool")
+    public void fieldTwigCollectWithTool() {
+        final Field field = new Field(MapColors.TWIG);
+        assumeTrue(field.isWalkable());
+        assumeFalse(field.hasTree());
+        assumeFalse(field.hasStone());
+        assumeFalse(field.hasFire());
+        assumeFalse(field.hasBerry());
+        assumeFalse(field.hasCarrot());
+        assumeTrue(field.hasTwig());
+        
+        EquippableItem tool = new ItemAxe();
+        field.interact(tool);
+        AbstractItem loot = field.interact(tool);
+        assertEquals(100, tool.percentage());
+
+        assertEquals(1, loot.getAmount());
+        assertEquals(ItemType.TWIG, loot.getType());
+
+
+        assertFalse(field.hasTwig());
+    }
+
+    @Test
+    @DisplayName("Field twig collect without tool")
+    public void fieldTwigCollectWithoutTool() {
+        final Field field = new Field(MapColors.TWIG);
+        assumeTrue(field.isWalkable());
+        assumeFalse(field.hasTree());
+        assumeFalse(field.hasStone());
+        assumeFalse(field.hasFire());
+        assumeFalse(field.hasBerry());
+        assumeFalse(field.hasCarrot());
+        assumeTrue(field.hasTwig());
+        
+        assertNull(field.interact(null));
+        AbstractItem loot = field.interact(null);
+        assertEquals(1, loot.getAmount());
+        assertEquals(ItemType.TWIG, loot.getType());
+
+        assertFalse(field.hasTwig());
+    }
+
+    @Test
+    @DisplayName("Field log collect with tool")
+    public void fieldLogCollectWithTool() {
+        final Field field = new Field(MapColors.TREE);
+        assumeTrue(field.isWalkable());
+        assumeTrue(field.hasTree());
+        assumeFalse(field.hasStone());
+        assumeFalse(field.hasFire());
+        assumeFalse(field.hasBerry());
+        assumeFalse(field.hasCarrot());
+        assumeFalse(field.hasTwig());
+        
+        EquippableItem tool = new ItemAxe();
+        for (int i = 0; i < 3; i++) 
+            assertNull(field.interact(tool));
+        AbstractItem loot = field.interact(tool);
+        assertEquals((float)36/40*100, tool.percentage());
+
+        assertEquals(2, loot.getAmount());
+        assertEquals(ItemType.LOG, loot.getType());
+
+        assertFalse(field.hasTree());
+    }
+
+    @Test
+    @DisplayName("Field log collect without tool")
+    public void fieldLogCollectWithoutTool() {
+        final Field field = new Field(MapColors.TREE);
+        assumeTrue(field.isWalkable());
+        assumeTrue(field.hasTree());
+        assumeFalse(field.hasStone());
+        assumeFalse(field.hasFire());
+        assumeFalse(field.hasBerry());
+        assumeFalse(field.hasCarrot());
+        assumeFalse(field.hasTwig());
+        
+        assertNull(field.interact(null));
+        for (int i = 0; i < 3; i++) 
+            assertNull(field.interact(null));
+        assertNull(field.interact(null));
+
+        assertTrue(field.hasTree());
+    }
+
+    @Test
+    @DisplayName("Field log collect with wrong tool")
+    public void fieldLogCollectWithWrongTool() {
+        final Field field = new Field(MapColors.TREE);
+        assumeTrue(field.isWalkable());
+        assumeTrue(field.hasTree());
+        assumeFalse(field.hasStone());
+        assumeFalse(field.hasFire());
+        assumeFalse(field.hasBerry());
+        assumeFalse(field.hasCarrot());
+        assumeFalse(field.hasTwig());
+        
+        EquippableItem tool = new ItemPickaxe();
+        for (int i = 0; i < 3; i++) 
+            assertNull(field.interact(tool));
+        assertNull(field.interact(tool));
+        assertEquals(100, tool.percentage());
+
+        assertTrue(field.hasTree());
     }
 }

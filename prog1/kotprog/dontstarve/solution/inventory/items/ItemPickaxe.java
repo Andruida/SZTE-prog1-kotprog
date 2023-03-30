@@ -15,6 +15,7 @@ public class ItemPickaxe extends EquippableItem {
      */
     public ItemPickaxe() {
         super(ItemType.PICKAXE);
+        durability = MAX_DURABILITY;
     }
 
     @Override

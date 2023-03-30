@@ -1,6 +1,10 @@
 package prog1.kotprog.dontstarve.solution.character.actions;
 
 import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
+import prog1.kotprog.dontstarve.solution.inventory.items.AbstractItem;
+import prog1.kotprog.dontstarve.solution.inventory.items.CookableItem;
+import prog1.kotprog.dontstarve.solution.inventory.items.ItemType;
+import prog1.kotprog.dontstarve.solution.level.MutableField;
 
 /**
  * A főzés akció leírására szolgáló osztály: egy item megfőzése.
@@ -31,7 +35,21 @@ public class ActionCook extends Action {
 
     @Override
     public void execute(MutableCharacter executor) {
-        executor.getInventory().cookItem(index);
+        if (!executor.getCurrentPosition().getNearestField().hasFire()) {
+            super.execute(executor);
+            return;
+        }
+        ItemType type = executor.getInventory().cookItem(index);
+        if (type == null) {
+            super.execute(executor);
+            return;
+        }
+        AbstractItem item = ((CookableItem)type.instantiate()).cook();
+        boolean success = executor.getInventory().addItem(item);
+
+        if (!success) {
+            ((MutableField)executor.getCurrentPosition().getNearestField()).addItem(item);
+        }
         super.execute(executor);
     }
 }

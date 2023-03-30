@@ -29,4 +29,16 @@ public abstract class EquippableItem extends AbstractItem {
     public int getMaxStackAmount() {
         return 1;
     }
+
+    /**
+     * Koptatja a tárgyat.
+     * @return true, ha a tárgy használhatatlanná vált, false egyébként
+     */
+    public boolean damage() {
+        durability--;
+        if (durability < 0) {
+            durability = 0;
+        }
+        return durability <= 0;
+    }
 }

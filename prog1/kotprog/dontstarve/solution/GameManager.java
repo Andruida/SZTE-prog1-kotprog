@@ -328,8 +328,16 @@ public final class GameManager {
             action = new ActionNone();
         }
 
+        for (BaseField[] row : level) {
+            for (BaseField field : row) {
+                ((MutableField)field).tick();
+            }
+        }
+
         MutableCharacter humanPlayer = (MutableCharacter) characters.get(humanPlayerName);
-        action.execute(humanPlayer);
+        if (humanPlayer.getHp() > 0) {
+            action.execute(humanPlayer);
+        }
 
         for (BaseCharacter character : characters.values()) {
             if (character.getHp() <= 0) {
@@ -338,14 +346,12 @@ public final class GameManager {
             if (!(character instanceof MutableCharacter)) {
                 continue;
             }
-            ((MutableCharacter)character).tick();
-        }
-
-        for (BaseField[] row : level) {
-            for (BaseField field : row) {
-                ((MutableField)field).tick();
+            if (character.getHp() > 0) {
+                ((MutableCharacter)character).tick();
             }
         }
+
+        
         currentTick++;
     }
 

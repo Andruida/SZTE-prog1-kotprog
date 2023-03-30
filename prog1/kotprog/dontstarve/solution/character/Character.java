@@ -15,6 +15,16 @@ import prog1.kotprog.dontstarve.solution.utility.Position;
 public class Character implements MutableCharacter {
 
     /**
+     * Karakter max életereje.
+     */
+    public static final float MAX_HP = 100f;
+
+    /**
+     * Karakter max éhsége.
+     */
+    public static final float MAX_HUNGER = 100f;
+
+    /**
      * Karakter éhsége.
      */
     private float hunger;
@@ -65,7 +75,7 @@ public class Character implements MutableCharacter {
      * @param currentPosition karakter jelenlegi pozíciója
      */
     public Character(String name, Position currentPosition) {
-        this(name, currentPosition, 100f, 100f);
+        this(name, currentPosition, MAX_HP, MAX_HUNGER);
     }
 
     @Override
@@ -102,6 +112,7 @@ public class Character implements MutableCharacter {
             addHp(-5f);
             setHunger(0f);
         }
+        inventory.tick();
     }
 
     @Override
@@ -136,22 +147,22 @@ public class Character implements MutableCharacter {
 
     @Override
     public void setHp(float hp) {
-        this.hp = Math.min(hp, 100);
+        this.hp = Math.min(hp, MAX_HP);
     }
 
     @Override
     public void addHp(float hp) {
-        this.hp = Math.min(this.hp + hp, 100);
+        this.hp = Math.min(this.hp + hp, MAX_HP);
     }
 
     @Override
     public void setHunger(float hunger) {
-        this.hunger = Math.min(hunger, 100);
+        this.hunger = Math.min(hunger, MAX_HUNGER);
     }
 
     @Override
     public void addHunger(float hunger) {
-        this.hunger = Math.min(this.hunger + hunger, 100);
+        this.hunger = Math.min(this.hunger + hunger, MAX_HUNGER);
     }
 
     @Override

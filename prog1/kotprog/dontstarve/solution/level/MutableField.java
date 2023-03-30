@@ -1,6 +1,7 @@
 package prog1.kotprog.dontstarve.solution.level;
 
 import prog1.kotprog.dontstarve.solution.inventory.items.AbstractItem;
+import prog1.kotprog.dontstarve.solution.inventory.items.EquippableItem;
 
 public interface MutableField extends BaseField {
 
@@ -53,8 +54,9 @@ public interface MutableField extends BaseField {
 
     /**
      * Interakcióba lépés a mezővel.
+     * @param tool a használt eszköz.
      * @return az interakcióból származó tárgy. (null, ha több kör kell)
      */
-    AbstractItem interact();
+    AbstractItem interact(EquippableItem tool);
 
 }

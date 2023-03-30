@@ -15,7 +15,7 @@ public class ItemSpear extends EquippableItem {
      */
     public ItemSpear() {
         super(ItemType.SPEAR);
-
+        durability = MAX_DURABILITY;
     }
 
     @Override

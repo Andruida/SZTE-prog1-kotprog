@@ -133,4 +133,9 @@ public interface BaseInventory {
      * @return true, ha sikerült elkészíteni az itemet, false egyébként
      */
     boolean craftItem(ItemType itemType, MutableField field);
+
+    /**
+     * Az inventoryban lévő itemek lejárati idejének csökkentése.
+     */
+    void tick();
 }

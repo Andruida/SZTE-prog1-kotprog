@@ -4,79 +4,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 import prog1.kotprog.dontstarve.solution.inventory.items.AbstractItem;
-import prog1.kotprog.dontstarve.solution.inventory.items.ItemLog;
-import prog1.kotprog.dontstarve.solution.inventory.items.ItemRawBerry;
-import prog1.kotprog.dontstarve.solution.inventory.items.ItemRawCarrot;
-import prog1.kotprog.dontstarve.solution.inventory.items.ItemStone;
-import prog1.kotprog.dontstarve.solution.inventory.items.ItemTwig;
+import prog1.kotprog.dontstarve.solution.inventory.items.EquippableItem;
+import prog1.kotprog.dontstarve.solution.inventory.items.ItemType;
 
 public class Field implements MutableField {
 
     /**
-     * A mezőn található-e víz.
-     */
-    private boolean water;
-
-    /**
-     * A mezőn található-e fa.
-     */
-    private int tree;
-
-    /** 
      * Fa kivágásának ideje.
      */
     private static final int TREE_DURATION = 4;
 
     /**
-     * A mezőn található-e kő.
-     */
-    private int stone;
-
-    /** 
      * Kő kifejtésének ideje.
      */
     private static final int STONE_DURATION = 5;
 
     /**
-     * A mezőn található-e gally.
-     */
-    private int twig;
-
-    /** 
      * Gally leszedésének ideje.
      */
     private static final int TWIG_DURATION = 2;
 
     /**
-     * A mezőn található-e bogyó.
-     */
-    private int berry;
-
-    /** 
      * Bogyó leszedésének ideje.
      */
     private static final int BERRY_DURATION = 1;
 
     /**
-     * A mezőn található-e répa.
-     */
-    private int carrot;
-
-    /** 
      * Répa begyűjtésének ideje.
      */
     private static final int CARROT_DURATION = 1;
+
+    /**
+     * Tűz élettartama.
+     */
+    private static final int FIRE_DURATION = 60;
+
+    /**
+     * Mező típusa.
+     */
+    private FieldType fieldType;
+
+    /**
+     * A mezőn található erőforrás élettartama.
+     */
+    private int resourceDuration;
 
     /**
      * A mezőn tűz élettartama.<br>
      * Ha 0, akkor nincs tűz.
      */
     private int fire;
-
-    /** 
-     * Tűz élettartama.
-     */
-    private static final int FIRE_DURATION = 60;
 
     /**
      * A mezőn található itemek.
@@ -88,34 +65,35 @@ public class Field implements MutableField {
      * @param color a mező színe a térképen
      */
     public Field(int color) {
-        water = false;
-        tree = 0;
-        stone = 0;
-        twig = 0;
-        berry = 0;
-        carrot = 0;
+        fieldType = FieldType.EMPTY;
+        resourceDuration = 0;
         fire = 0;
         itemList = new ArrayList<>();
 
 
         switch (color) {
             case MapColors.WATER:
-                water = true;
+                fieldType = FieldType.WATER;
                 break;
             case MapColors.TREE:
-                tree = TREE_DURATION;
+                resourceDuration = TREE_DURATION;
+                fieldType = FieldType.TREE;
                 break;
             case MapColors.STONE:
-                stone = STONE_DURATION;
+                resourceDuration = STONE_DURATION;
+                fieldType = FieldType.STONE;
                 break;
             case MapColors.TWIG:
-                twig = TWIG_DURATION;
+                resourceDuration = TWIG_DURATION;
+                fieldType = FieldType.TWIG;
                 break;
             case MapColors.BERRY:
-                berry = BERRY_DURATION;
+                resourceDuration = BERRY_DURATION;
+                fieldType = FieldType.BERRY;
                 break;
             case MapColors.CARROT:
-                carrot = CARROT_DURATION;
+                resourceDuration = CARROT_DURATION;
+                fieldType = FieldType.CARROT;
                 break;
             case MapColors.EMPTY:
             default:
@@ -140,44 +118,39 @@ public class Field implements MutableField {
 
     @Override
     public boolean isEmpty() {
-        return !water
-            &&  tree <= 0
-            &&  stone <= 0
-            &&  fire <= 0
-            &&  berry <= 0
-            &&  carrot <= 0
-            &&  twig <= 0
-            &&  itemList.isEmpty();
+        return fieldType == FieldType.EMPTY
+            && fire <= 0
+            && itemList.isEmpty();
     }
 
     @Override
     public boolean isWalkable() {
-        return !water;
+        return fieldType != FieldType.WATER;
     }
 
     @Override
     public boolean hasTree() {
-        return tree > 0;
+        return fieldType == FieldType.TREE;
     }
 
     @Override
     public boolean hasStone() {
-        return stone > 0;
+        return fieldType == FieldType.STONE;
     }
 
     @Override
     public boolean hasTwig() {
-        return twig > 0;
+        return fieldType == FieldType.TWIG;
     }
 
     @Override
     public boolean hasBerry() {
-        return berry > 0;
+        return fieldType == FieldType.BERRY;
     }
 
     @Override
     public boolean hasCarrot() {
-        return carrot > 0;
+        return fieldType == FieldType.CARROT;
     }
 
     @Override
@@ -213,70 +186,69 @@ public class Field implements MutableField {
 
     @Override
     public void setStone(boolean state) {
-        stone = state ? STONE_DURATION : 0;
+        resourceDuration = state ? STONE_DURATION : 0;
+        fieldType = state ? FieldType.STONE : FieldType.EMPTY;
     }
 
     @Override
     public void setTree(boolean state) {
-        tree = state ? TREE_DURATION : 0;
+        resourceDuration = state ? TREE_DURATION : 0;
+        fieldType = state ? FieldType.TREE : FieldType.EMPTY;
     }
 
     @Override
     public void setTwig(boolean state) {
-        twig = state ? TWIG_DURATION : 0;
+        resourceDuration = state ? TWIG_DURATION : 0;
+        fieldType = state ? FieldType.TWIG : FieldType.EMPTY;
     }
 
     @Override
     public void setBerry(boolean state) {
-        berry = state ? BERRY_DURATION : 0;
+        resourceDuration = state ? BERRY_DURATION : 0;
+        fieldType = state ? FieldType.BERRY : FieldType.EMPTY;
     }
 
     @Override
     public void setCarrot(boolean state) {
-        carrot = state ? CARROT_DURATION : 0;
+        resourceDuration = state ? CARROT_DURATION : 0;
+        fieldType = state ? FieldType.CARROT : FieldType.EMPTY;
     }
 
     @Override
-    public AbstractItem interact() {
+    public AbstractItem interact(EquippableItem tool) {
         if (isEmpty()) {
             return null;
         }
-        if (hasTree()) {
-            tree--;
-            if (hasTree()) {
-                return new ItemLog(2);
-            }
+        if (resourceDuration <= 0) {
+            return null;
         }
-        if (hasStone()) {
-            stone--;
-            if (hasStone()) {
-                return new ItemStone(3);
-            }
+        if (hasTree() && (tool == null || tool.getType() != ItemType.AXE)) {
+            return null;
         }
-        if (hasTwig()) {
-            twig--;
-            if (hasTwig()) {
-                return new ItemTwig(1);
-            }
+        if (hasStone() && (tool == null || tool.getType() != ItemType.PICKAXE)) {
+            return null;
         }
-        if (hasBerry()) {
-            berry--;
-            if (hasBerry()) {
-                return new ItemRawBerry(1);
-            }
+
+        resourceDuration--;
+        if (tool != null && (hasTree() || hasStone())) {
+            tool.damage();
         }
-        if (hasCarrot()) {
-            carrot--;
-            if (hasCarrot()) {
-                return new ItemRawCarrot(1);
-            }
+        if (resourceDuration > 0) {
+            return null;
         }
-        return null;
+
+        AbstractItem loot = fieldType.getLoot();
+        if (loot == null) {
+            return null;
+        }
+
+        fieldType = FieldType.EMPTY;
+        return loot;
     }
 
     @Override
     public void tick() {
-        if (fire > 0) {
+        if (hasFire()) {
             fire--;
         }
     }

@@ -2,6 +2,7 @@ package prog1.kotprog.dontstarve.solution.character.actions;
 
 import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
 import prog1.kotprog.dontstarve.solution.inventory.items.AbstractItem;
+import prog1.kotprog.dontstarve.solution.inventory.items.EquippableItem;
 import prog1.kotprog.dontstarve.solution.level.MutableField;
 
 /**
@@ -19,7 +20,15 @@ public class ActionInteract extends Action {
     @Override
     public void execute(MutableCharacter character) {
         MutableField field = (MutableField)character.getCurrentPosition().getNearestField();
-        AbstractItem item = field.interact();
+        if (field == null) {
+            super.execute(character);
+            return;
+        }
+        EquippableItem tool = character.getInventory().equippedItem();
+        AbstractItem item = field.interact(tool);
+        if (tool != null && tool.percentage() <= 0) {
+            character.getInventory().unequipItem();
+        }
         if (item != null) {
             boolean success = character.getInventory().addItem(item);
             if (!success) {

@@ -202,6 +202,9 @@ public class Inventory implements BaseInventory {
     public EquippableItem unequipItem() {
         EquippableItem item = localEquippedItem;
         localEquippedItem = null;
+        if (item != null && item.percentage() == 0) {
+            return null;
+        }
         if (addItem(item)) {
             return null;
         }
@@ -333,6 +336,17 @@ public class Inventory implements BaseInventory {
 
 
         return true;
+    }
+
+
+    @Override
+    public void tick() {
+        if (localEquippedItem != null && localEquippedItem.getType() == ItemType.TORCH) {
+            boolean destroyed = localEquippedItem.damage();
+            if (destroyed) {
+                unequipItem();
+            }
+        }
     }
 
 }
