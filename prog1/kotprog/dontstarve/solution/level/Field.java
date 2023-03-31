@@ -222,10 +222,10 @@ public class Field implements MutableField {
         if (resourceDuration <= 0) {
             return null;
         }
-        if (hasTree() && (tool == null || tool.getType() != ItemType.AXE)) {
+        if (hasTree() && (tool == null || tool.percentage() == 0 || tool.getType() != ItemType.AXE)) {
             return null;
         }
-        if (hasStone() && (tool == null || tool.getType() != ItemType.PICKAXE)) {
+        if (hasStone() && (tool == null || tool.percentage() == 0 || tool.getType() != ItemType.PICKAXE)) {
             return null;
         }
 

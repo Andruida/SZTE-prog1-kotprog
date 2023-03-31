@@ -227,4 +227,102 @@ public class FieldTest {
 
         assertTrue(field.hasTree());
     }
+
+    @Test
+    @DisplayName("Field stone collect with tool")
+    public void fieldStoneCollectWithTool() {
+        final Field field = new Field(MapColors.STONE);
+        assumeTrue(field.isWalkable());
+        assumeFalse(field.hasTree());
+        assumeTrue(field.hasStone());
+        assumeFalse(field.hasFire());
+        assumeFalse(field.hasBerry());
+        assumeFalse(field.hasCarrot());
+        assumeFalse(field.hasTwig());
+        
+        EquippableItem tool = new ItemPickaxe();
+        for (int i = 0; i < 4; i++) 
+            assertNull(field.interact(tool));
+        AbstractItem loot = field.interact(tool);
+        assertEquals((float)25/30*100, tool.percentage());
+
+        assertEquals(3, loot.getAmount());
+        assertEquals(ItemType.STONE, loot.getType());
+
+        assertFalse(field.hasStone());
+    }
+
+    @Test
+    @DisplayName("Field stone collect without tool")
+    public void fieldStoneCollectWithoutTool() {
+        final Field field = new Field(MapColors.STONE);
+        assumeTrue(field.isWalkable());
+        assumeFalse(field.hasTree());
+        assumeTrue(field.hasStone());
+        assumeFalse(field.hasFire());
+        assumeFalse(field.hasBerry());
+        assumeFalse(field.hasCarrot());
+        assumeFalse(field.hasTwig());
+        
+        assertNull(field.interact(null));
+        for (int i = 0; i < 4; i++) 
+            assertNull(field.interact(null));
+        assertNull(field.interact(null));
+
+        assertTrue(field.hasStone());
+    }
+
+    @Test
+    @DisplayName("Field stone collect with wrong tool")
+    public void fieldStoneCollectWithWrongTool() {
+        final Field field = new Field(MapColors.STONE);
+        assumeTrue(field.isWalkable());
+        assumeFalse(field.hasTree());
+        assumeTrue(field.hasStone());
+        assumeFalse(field.hasFire());
+        assumeFalse(field.hasBerry());
+        assumeFalse(field.hasCarrot());
+        assumeFalse(field.hasTwig());
+        
+        EquippableItem tool = new ItemAxe();
+        for (int i = 0; i < 4; i++) 
+            assertNull(field.interact(tool));
+        assertNull(field.interact(tool));
+        assertEquals(100, tool.percentage());
+
+        assertTrue(field.hasStone());
+    }
+
+    @Test
+    @DisplayName("Field stone collect with damaged tool")
+    public void fieldStoneCollectWithDamagedTool() {
+        final Field field = new Field(MapColors.STONE);
+        assumeTrue(field.isWalkable());
+        assumeFalse(field.hasTree());
+        assumeTrue(field.hasStone());
+        assumeFalse(field.hasFire());
+        assumeFalse(field.hasBerry());
+        assumeFalse(field.hasCarrot());
+        assumeFalse(field.hasTwig());
+        
+        EquippableItem tool = new ItemPickaxe();
+        for (int i = 0; i < 26; i++) 
+            tool.damage();
+        for (int i = 0; i < 4; i++) 
+            assertNull(field.interact(tool));
+        assertNull(field.interact(tool));
+        assertEquals(0, tool.percentage());
+
+        assertTrue(field.hasStone());
+
+        EquippableItem tool2 = new ItemPickaxe();
+        AbstractItem loot = field.interact(tool2);
+        assertEquals((float)29/30*100, tool2.percentage());
+
+        assertEquals(3, loot.getAmount());
+        assertEquals(ItemType.STONE, loot.getType());
+
+        assertFalse(field.hasStone());
+
+    }
 }

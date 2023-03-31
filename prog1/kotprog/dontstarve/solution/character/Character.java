@@ -1,10 +1,10 @@
 package prog1.kotprog.dontstarve.solution.character;
 
-import prog1.kotprog.dontstarve.solution.GameManager;
 import prog1.kotprog.dontstarve.solution.character.actions.Action;
 import prog1.kotprog.dontstarve.solution.character.actions.ActionNone;
 import prog1.kotprog.dontstarve.solution.inventory.BaseInventory;
 import prog1.kotprog.dontstarve.solution.inventory.Inventory;
+import prog1.kotprog.dontstarve.solution.level.BaseField;
 import prog1.kotprog.dontstarve.solution.utility.Direction;
 import prog1.kotprog.dontstarve.solution.utility.Position;
 
@@ -147,22 +147,22 @@ public class Character implements MutableCharacter {
 
     @Override
     public void setHp(float hp) {
-        this.hp = Math.min(hp, MAX_HP);
+        this.hp = Math.min(Math.max(hp, 0), MAX_HP);
     }
 
     @Override
     public void addHp(float hp) {
-        this.hp = Math.min(this.hp + hp, MAX_HP);
+        this.hp = Math.min(Math.max(this.hp + hp, 0), MAX_HP);
     }
 
     @Override
     public void setHunger(float hunger) {
-        this.hunger = Math.min(hunger, MAX_HUNGER);
+        this.hunger = Math.min(Math.max(hunger, 0), MAX_HUNGER);
     }
 
     @Override
     public void addHunger(float hunger) {
-        this.hunger = Math.min(this.hunger + hunger, MAX_HUNGER);
+        this.hunger = Math.min(Math.max(this.hunger + hunger, 0), MAX_HUNGER);
     }
 
     @Override
@@ -201,8 +201,8 @@ public class Character implements MutableCharacter {
                 break;
         }
 
-        Position newPos = getCurrentPosition().getNearestWholePosition();
-        if (!GameManager.getInstance().getField((int)newPos.getX(), (int)newPos.getY()).isWalkable()) {
+        BaseField field = getCurrentPosition().getNearestField();
+        if (field == null || !field.isWalkable()) {
             setPosition(pos);
         }
     }

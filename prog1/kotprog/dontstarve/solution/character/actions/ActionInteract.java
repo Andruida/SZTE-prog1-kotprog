@@ -3,6 +3,7 @@ package prog1.kotprog.dontstarve.solution.character.actions;
 import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
 import prog1.kotprog.dontstarve.solution.inventory.items.AbstractItem;
 import prog1.kotprog.dontstarve.solution.inventory.items.EquippableItem;
+import prog1.kotprog.dontstarve.solution.inventory.items.ItemType;
 import prog1.kotprog.dontstarve.solution.level.MutableField;
 
 /**
@@ -29,11 +30,19 @@ public class ActionInteract extends Action {
         if (tool != null && tool.percentage() <= 0) {
             character.getInventory().unequipItem();
         }
-        if (item != null) {
-            boolean success = character.getInventory().addItem(item);
-            if (!success) {
-                field.addItem(item);
-            }
+        if (item == null) { 
+            super.execute(character);
+            return;
+        }
+        if (item.getType() == ItemType.LOG || item.getType() == ItemType.STONE) {
+            field.addItem(item);
+            super.execute(character);
+            return;
+        }
+
+        boolean success = character.getInventory().addItem(item);
+        if (!success) {
+            field.addItem(item);
         }
         super.execute(character);
     }

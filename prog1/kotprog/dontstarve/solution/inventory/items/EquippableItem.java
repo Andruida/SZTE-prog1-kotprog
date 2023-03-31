@@ -41,4 +41,11 @@ public abstract class EquippableItem extends AbstractItem {
         }
         return durability <= 0;
     }
+
+    @Override
+    public EquippableItem clone() {
+        EquippableItem item = (EquippableItem)super.clone();
+        item.durability = durability;
+        return item;
+    }
 }
