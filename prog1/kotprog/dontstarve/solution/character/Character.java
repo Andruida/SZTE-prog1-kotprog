@@ -115,6 +115,7 @@ public class Character implements MutableCharacter {
             addHp(-5f);
             setHunger(0f);
         }
+        hunger = Math.min(hunger, MAX_HUNGER);
         inventory.tick();
     }
 
@@ -166,12 +167,12 @@ public class Character implements MutableCharacter {
 
     @Override
     public void setHunger(float hunger) {
-        this.hunger = Math.min(Math.max(hunger, 0), MAX_HUNGER);
+        this.hunger = Math.max(hunger, 0);
     }
 
     @Override
     public void addHunger(float hunger) {
-        this.hunger = Math.min(Math.max(this.hunger + hunger, 0), MAX_HUNGER);
+        this.hunger = Math.max(this.hunger + hunger, 0);
     }
 
     @Override
