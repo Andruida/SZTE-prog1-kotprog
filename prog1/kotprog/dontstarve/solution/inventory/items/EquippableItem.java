@@ -11,6 +11,16 @@ public abstract class EquippableItem extends AbstractItem {
     protected int durability;
 
     /**
+     * A tárgy maximális állapota.
+     */
+    protected int maxDurability;
+
+    /**
+     * A tárgy sebzése.
+     */
+    protected int damage;
+
+    /**
      * Konstruktor, amellyel a tárgy létrehozható.
      *
      * @param type   az item típusa
@@ -23,7 +33,9 @@ public abstract class EquippableItem extends AbstractItem {
      * Megadja, hogy milyen állapotban van a tárgy.
      * @return a tárgy használatlansága, %-ban (100%: tökéletes állapot)
      */
-    public abstract float percentage();
+    public float percentage() {
+        return (float)durability / maxDurability * 100;
+    }
 
     @Override
     public int getMaxStackAmount() {
@@ -31,10 +43,18 @@ public abstract class EquippableItem extends AbstractItem {
     }
 
     /**
+     * Megadja, hogy a tárgy mennyi sebzést okoz.
+     * @return a tárgy sebzése
+     */
+    public int getDamage() {
+        return damage;
+    }
+
+    /**
      * Koptatja a tárgyat.
      * @return true, ha a tárgy használhatatlanná vált, false egyébként
      */
-    public boolean damage() {
+    public boolean wear() {
         durability--;
         if (durability < 0) {
             durability = 0;

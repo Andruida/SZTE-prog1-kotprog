@@ -342,7 +342,7 @@ public class Inventory implements BaseInventory {
     @Override
     public void tick() {
         if (localEquippedItem != null && localEquippedItem.getType() == ItemType.TORCH) {
-            boolean destroyed = localEquippedItem.damage();
+            boolean destroyed = localEquippedItem.wear();
             if (destroyed) {
                 unequipItem();
             }

@@ -11,16 +11,18 @@ public class ItemSpear extends EquippableItem {
     private static final int MAX_DURABILITY = 10;
 
     /**
+     * A tárgy sebzése.
+     */
+    private static final int DAMAGE = 19;
+
+    /**
      * Konstruktor, amellyel a tárgy létrehozható.
      */
     public ItemSpear() {
         super(ItemType.SPEAR);
         durability = MAX_DURABILITY;
-    }
-
-    @Override
-    public float percentage() {
-        return (float)durability / MAX_DURABILITY * 100;
+        maxDurability = MAX_DURABILITY;
+        damage = DAMAGE;
     }
 
 }

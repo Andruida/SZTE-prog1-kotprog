@@ -307,7 +307,7 @@ public class FieldTest {
         
         EquippableItem tool = new ItemPickaxe();
         for (int i = 0; i < 26; i++) 
-            tool.damage();
+            tool.wear();
         for (int i = 0; i < 4; i++) 
             assertNull(field.interact(tool));
         assertNull(field.interact(tool));

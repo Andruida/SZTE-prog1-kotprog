@@ -22,15 +22,7 @@ public class ItemCookedCarrot extends EdibleItem {
      */
     public ItemCookedCarrot(int amount) {
         super(ItemType.COOKED_CARROT, 10, amount);
-    }
-
-    @Override
-    public int getHealth() {
-        return HEALTH;
-    }
-
-    @Override
-    public int getHunger() {
-        return HUNGER;
+        health = HEALTH;
+        hunger = HUNGER;
     }
 }

@@ -126,7 +126,7 @@ public class ActionTest {
         assumeTrue(inventory.getItem(0).getType() == ItemType.AXE);
 
         for (int i = 0; i < 36; i++) {
-            ((EquippableItem)inventory.getItem(0)).damage();
+            ((EquippableItem)inventory.getItem(0)).wear();
         }
 
         Action equipAction = new ActionEquip(0);

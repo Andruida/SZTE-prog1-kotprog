@@ -22,20 +22,12 @@ public class ItemRawBerry extends CookableItem {
      */
     public ItemRawBerry(int amount) {
         super(ItemType.RAW_BERRY, 10, amount);
+        health = HEALTH;
+        hunger = HUNGER;
     }
 
     @Override
     public EdibleItem cook() {
         return new ItemCookedBerry(getAmount());
-    }
-
-    @Override
-    public int getHealth() {
-        return HEALTH;
-    }
-
-    @Override
-    public int getHunger() {
-        return HUNGER;
     }
 }

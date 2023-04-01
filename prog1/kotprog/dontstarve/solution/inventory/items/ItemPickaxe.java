@@ -11,15 +11,17 @@ public class ItemPickaxe extends EquippableItem {
     private static final int MAX_DURABILITY = 30;
 
     /**
+     * A tárgy sebzése.
+     */
+    private static final int DAMAGE = 8;
+
+    /**
      * Konstruktor, amellyel a tárgy létrehozható.
      */
     public ItemPickaxe() {
         super(ItemType.PICKAXE);
         durability = MAX_DURABILITY;
-    }
-
-    @Override
-    public float percentage() {
-        return (float)durability / MAX_DURABILITY * 100;
+        maxDurability = MAX_DURABILITY;
+        damage = DAMAGE;
     }
 }

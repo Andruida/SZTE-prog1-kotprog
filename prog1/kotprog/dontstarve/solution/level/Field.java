@@ -231,7 +231,7 @@ public class Field implements MutableField {
 
         resourceDuration--;
         if (tool != null && (hasTree() || hasStone())) {
-            tool.damage();
+            tool.wear();
         }
         if (resourceDuration > 0) {
             return null;
