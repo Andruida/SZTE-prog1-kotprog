@@ -30,7 +30,7 @@ public class ActionInteract extends Action {
         if (tool != null && tool.percentage() <= 0) {
             character.getInventory().unequipItem();
         }
-        if (item == null) { 
+        if (item == null) {
             super.execute(character);
             return;
         }

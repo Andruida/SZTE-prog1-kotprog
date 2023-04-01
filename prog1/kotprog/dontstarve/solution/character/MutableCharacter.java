@@ -61,4 +61,9 @@ public interface MutableCharacter extends BaseCharacter {
      * @param direction a lépés iránya
      */
     void step(Direction direction);
+
+    /**
+     * Karakter támadása.
+     */
+    void attack();
 }

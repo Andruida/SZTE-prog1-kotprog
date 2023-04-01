@@ -5,7 +5,6 @@ import prog1.kotprog.dontstarve.solution.character.Character;
 import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
 import prog1.kotprog.dontstarve.solution.character.actions.Action;
 import prog1.kotprog.dontstarve.solution.character.actions.ActionNone;
-import prog1.kotprog.dontstarve.solution.exceptions.NotImplementedException;
 import prog1.kotprog.dontstarve.solution.inventory.BaseInventory;
 import prog1.kotprog.dontstarve.solution.inventory.items.ItemLog;
 import prog1.kotprog.dontstarve.solution.inventory.items.ItemRawBerry;
@@ -19,7 +18,9 @@ import prog1.kotprog.dontstarve.solution.level.Level;
 import prog1.kotprog.dontstarve.solution.utility.GameState;
 import prog1.kotprog.dontstarve.solution.utility.Position;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -256,13 +257,18 @@ public final class GameManager {
      * @return Az életben lévő karakterek száma
      */
     public int remainingCharacters() {
-        int count = 0;
-        for (BaseCharacter character : characters.values()) {
-            if (character.getHp() > 0) {
-                count++;
-            }
-        }
-        return count;
+        // int count = 0;
+        // for (BaseCharacter character : characters.values()) {
+        //     if (character.getHp() > 0) {
+        //         count++;
+        //     }
+        // }
+        // return count;
+        return characters.size();
+    }
+
+    public List<BaseCharacter> getCharacters() {
+        return new ArrayList<>(characters.values());
     }
 
     /**
@@ -350,9 +356,21 @@ public final class GameManager {
                 ((MutableCharacter)character).tick();
             }
         }
+        List<String> deadCharacters = new ArrayList<>();
+        for (BaseCharacter character : characters.values()) {
+            if (character.getHp() <= 0) {
+                deadCharacters.add(character.getName());
+            }
+        }
+        for (String deadCharacter : deadCharacters) {
+            characters.remove(deadCharacter);
+        }
 
-        
         currentTick++;
+
+        if (remainingCharacters() <= 1) {
+            gameState = GameState.FINISHED;
+        }
     }
 
     /**
@@ -374,7 +392,12 @@ public final class GameManager {
         if (gameState != GameState.FINISHED) {
             return null;
         }
-        throw new NotImplementedException();
+        for (BaseCharacter character : characters.values()) {
+            if (character.getHp() > 0) {
+                return character;
+            }
+        }
+        return null;
     }
 
     /**

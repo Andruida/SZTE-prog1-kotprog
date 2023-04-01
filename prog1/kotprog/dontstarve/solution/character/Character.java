@@ -1,10 +1,13 @@
 package prog1.kotprog.dontstarve.solution.character;
 
+import prog1.kotprog.dontstarve.solution.GameManager;
 import prog1.kotprog.dontstarve.solution.character.actions.Action;
 import prog1.kotprog.dontstarve.solution.character.actions.ActionNone;
 import prog1.kotprog.dontstarve.solution.inventory.BaseInventory;
 import prog1.kotprog.dontstarve.solution.inventory.Inventory;
+import prog1.kotprog.dontstarve.solution.inventory.items.ItemType;
 import prog1.kotprog.dontstarve.solution.level.BaseField;
+import prog1.kotprog.dontstarve.solution.level.MutableField;
 import prog1.kotprog.dontstarve.solution.utility.Direction;
 import prog1.kotprog.dontstarve.solution.utility.Position;
 
@@ -148,11 +151,17 @@ public class Character implements MutableCharacter {
     @Override
     public void setHp(float hp) {
         this.hp = Math.min(Math.max(hp, 0), MAX_HP);
+        if (this.hp <= 0) {
+            die();
+        }
     }
 
     @Override
     public void addHp(float hp) {
         this.hp = Math.min(Math.max(this.hp + hp, 0), MAX_HP);
+        if (this.hp <= 0) {
+            die();
+        }
     }
 
     @Override
@@ -207,5 +216,51 @@ public class Character implements MutableCharacter {
         }
     }
 
+    @Override
+    public void attack() {
+        Position pos = getCurrentPosition();
+        MutableCharacter closestEnemy = null;
+        for (BaseCharacter player : GameManager.getInstance().getCharacters()) {
+            if (!(player instanceof MutableCharacter)) {
+                continue;
+            }
+            if (player == this || player.getCurrentPosition().distanceTo(pos) > 2 || player.getHp() <= 0) {
+                continue;
+            }
+            if (closestEnemy == null) {
+                closestEnemy = (MutableCharacter) player;
+                continue;
+            }
+            if (player.getCurrentPosition().distanceTo(pos) < closestEnemy.getCurrentPosition().distanceTo(pos)) {
+                closestEnemy = (MutableCharacter) player;
+            }
+        }
+        if (closestEnemy == null) {
+            return;
+        }
+
+        if (inventory.equippedItem() == null) {
+            closestEnemy.addHp(-4);
+            return;
+        }
+        closestEnemy.addHp(-inventory.equippedItem().getDamage());
+        if (inventory.equippedItem().getType() == ItemType.TORCH) {
+            return;
+        }
+        inventory.equippedItem().wear();
+        if (inventory.equippedItem().percentage() <= 0) {
+            inventory.unequipItem();
+        }
+
+    }
+
+    private void die() {
+        MutableField field = (MutableField)currentPosition.getNearestField();
+
+        field.addItem(inventory.equippedItem());
+        for (int i = 0; i < 10; i++) {
+            field.addItem(inventory.getItem(i));
+        }
+    }
 
 }
