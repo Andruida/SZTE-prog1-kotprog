@@ -20,12 +20,12 @@ public class Character implements MutableCharacter {
     /**
      * Karakter max életereje.
      */
-    public static final float MAX_HP = 100f;
+    private static final float MAX_HP = 100f;
 
     /**
      * Karakter max éhsége.
      */
-    public static final float MAX_HUNGER = 100f;
+    private static final float MAX_HUNGER = 100f;
 
     /**
      * Karakter éhsége.

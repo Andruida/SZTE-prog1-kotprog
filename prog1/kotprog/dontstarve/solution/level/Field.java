@@ -71,31 +71,31 @@ public class Field implements MutableField {
         itemList = new ArrayList<>();
 
 
-        switch (color) {
-            case MapColors.WATER:
+        switch (MapColors.fromInt(color)) {
+            case WATER:
                 fieldType = FieldType.WATER;
                 break;
-            case MapColors.TREE:
+            case TREE:
                 resourceDuration = TREE_DURATION;
                 fieldType = FieldType.TREE;
                 break;
-            case MapColors.STONE:
+            case STONE:
                 resourceDuration = STONE_DURATION;
                 fieldType = FieldType.STONE;
                 break;
-            case MapColors.TWIG:
+            case TWIG:
                 resourceDuration = TWIG_DURATION;
                 fieldType = FieldType.TWIG;
                 break;
-            case MapColors.BERRY:
+            case BERRY:
                 resourceDuration = BERRY_DURATION;
                 fieldType = FieldType.BERRY;
                 break;
-            case MapColors.CARROT:
+            case CARROT:
                 resourceDuration = CARROT_DURATION;
                 fieldType = FieldType.CARROT;
                 break;
-            case MapColors.EMPTY:
+            case EMPTY:
             default:
                 break;
         }

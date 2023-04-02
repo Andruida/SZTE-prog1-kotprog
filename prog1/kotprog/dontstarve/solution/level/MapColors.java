@@ -3,39 +3,33 @@ package prog1.kotprog.dontstarve.solution.level;
 /**
  * A betöltendő mapen előforduló színek enumja.
  */
-public class MapColors {
-    /**
-     * Üres mező.
-     */
-    public static final int EMPTY = 0xFF32C832;
 
-    /**
-     * Vizet tartalmazó mező.
-     */
-    public static final int WATER = 0xFF3264C8;
+public enum MapColors {
+    EMPTY(0xFF32C832),
+    WATER(0xFF3264C8),
+    TREE(0xFFC86432),
+    STONE(0xFFC8C8C8),
+    TWIG(0xFFF0B478),
+    BERRY(0xFFFF0000),
+    CARROT(0xFFFAC800);
 
-    /**
-     * Fát tartalmazó mező.
-     */
-    public static final int TREE = 0xFFC86432;
+    private final int color;
 
-    /**
-     * Követ tartalmazó mező.
-     */
-    public static final int STONE = 0xFFC8C8C8;
+    MapColors(int color) {
+        this.color = color;
+    }
 
-    /**
-     * Gallyat tartalmazó mező.
-     */
-    public static final int TWIG = 0xFFF0B478;
+    public int getColor() {
+        return color;
+    }
 
-    /**
-     * Bogyót tartalmazó mező.
-     */
-    public static final int BERRY = 0xFFFF0000;
+    public static MapColors fromInt(int color) {
+        for (MapColors c : values()) {
+            if (c.color == color) {
+                return c;
+            }
+        }
+        return null;
+    }
 
-    /**
-     * Répát tartalmazó mező.
-     */
-    public static final int CARROT = 0xFFFAC800;
 }

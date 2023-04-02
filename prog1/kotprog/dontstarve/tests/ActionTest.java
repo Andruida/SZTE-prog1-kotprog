@@ -11,7 +11,6 @@ import prog1.kotprog.dontstarve.solution.character.actions.ActionInteract;
 import prog1.kotprog.dontstarve.solution.inventory.BaseInventory;
 import prog1.kotprog.dontstarve.solution.inventory.items.*;
 import prog1.kotprog.dontstarve.solution.level.Level;
-import prog1.kotprog.dontstarve.solution.utility.Position;
 
 import static org.junit.Assume.assumeNotNull;
 import static org.junit.jupiter.api.Assertions.*;
