@@ -53,4 +53,16 @@ public interface BaseCharacter {
      * @return a játékos neve
      */
     String getName();
+
+    /**
+     * Megadja, hogy a karakter tud-e gondolkodni.
+     * @return true, ha a játékos bot, false, ha ember
+     */
+    boolean canThink();
+
+    /**
+     * A játékos következő lépését kéri le.
+     * @return A következő lépés, null, ha ember.
+     */
+    Action think();
 }

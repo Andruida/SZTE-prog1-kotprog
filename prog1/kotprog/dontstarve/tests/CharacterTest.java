@@ -11,14 +11,14 @@ import org.junit.jupiter.api.Test;
 import prog1.kotprog.dontstarve.solution.GameManager;
 import prog1.kotprog.dontstarve.solution.character.Character;
 import prog1.kotprog.dontstarve.solution.character.MutableCharacter;
-import prog1.kotprog.dontstarve.solution.inventory.BaseInventory;
+// import prog1.kotprog.dontstarve.solution.inventory.BaseInventory;
 import prog1.kotprog.dontstarve.solution.level.Level;
 import prog1.kotprog.dontstarve.solution.utility.Position;
 
 public class CharacterTest {
 
     private static final GameManager gameManager = GameManager.getInstance();
-    private BaseInventory inventory;
+    // private BaseInventory inventory;
     private MutableCharacter player;
 
     @BeforeEach
@@ -31,7 +31,7 @@ public class CharacterTest {
         assumeNotNull(player);
         assumeTrue(gameManager.startGame());
 
-        inventory = player.getInventory();
+        // inventory = player.getInventory();
     }
 
     void setUpLevel(String levelName) {

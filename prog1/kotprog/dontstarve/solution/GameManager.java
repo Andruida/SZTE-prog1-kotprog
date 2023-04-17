@@ -140,7 +140,7 @@ public final class GameManager {
             gameState = GameState.READY;
         }
 
-        BaseCharacter character = new Character(name, position);
+        BaseCharacter character = new Character(name, position, player);
         characters.put(name, character);
         initInventory(character);
         return position;
@@ -343,6 +343,15 @@ public final class GameManager {
         MutableCharacter humanPlayer = (MutableCharacter) characters.get(humanPlayerName);
         if (humanPlayer.getHp() > 0) {
             action.execute(humanPlayer);
+        }
+
+
+        if (!tutorial) {
+            for (BaseCharacter character : characters.values()) {
+                if (character.getHp() > 0 && character.canThink()) {
+                    character.think().execute((MutableCharacter)character);
+                }
+            }
         }
 
         for (BaseCharacter character : characters.values()) {

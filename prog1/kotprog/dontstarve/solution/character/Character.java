@@ -27,6 +27,12 @@ public class Character implements MutableCharacter {
      */
     private static final float MAX_HUNGER = 100f;
 
+
+    /**
+     * A bot agya.
+     */
+    private Brain brain;
+
     /**
      * Karakter éhsége.
      */
@@ -79,6 +85,19 @@ public class Character implements MutableCharacter {
      */
     public Character(String name, Position currentPosition) {
         this(name, currentPosition, MAX_HP, MAX_HUNGER);
+    }
+
+    /**
+     * Karakter konstruktora.
+     * @param name karakter neve
+     * @param currentPosition karakter jelenlegi pozíciója
+     * @param player true, ha a karakter játékos, false, ha a karakter gépi
+     */
+    public Character(String name, Position currentPosition, boolean player) {
+        this(name, currentPosition);
+        if (!player) {
+            brain = new Brain(this);
+        }
     }
 
     @Override
@@ -262,6 +281,19 @@ public class Character implements MutableCharacter {
         for (int i = 0; i < 10; i++) {
             field.addItem(inventory.getItem(i));
         }
+    }
+
+    @Override
+    public Action think() {
+        if (brain == null) {
+            return null;
+        }
+        return brain.think();
+    }
+
+    @Override
+    public boolean canThink() {
+        return brain != null;
     }
 
 }
