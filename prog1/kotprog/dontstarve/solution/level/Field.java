@@ -71,7 +71,7 @@ public class Field implements MutableField {
         itemList = new ArrayList<>();
 
 
-        switch (MapColors.fromInt(color)) {
+        switch (MapColor.fromInt(color)) {
             case WATER:
                 fieldType = FieldType.WATER;
                 break;

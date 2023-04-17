@@ -16,13 +16,13 @@ import prog1.kotprog.dontstarve.solution.inventory.items.ItemAxe;
 import prog1.kotprog.dontstarve.solution.inventory.items.ItemPickaxe;
 import prog1.kotprog.dontstarve.solution.inventory.items.ItemType;
 import prog1.kotprog.dontstarve.solution.level.Field;
-import prog1.kotprog.dontstarve.solution.level.MapColors;
+import prog1.kotprog.dontstarve.solution.level.MapColor;
 
 public class FieldTest {
     @Test
     @DisplayName("Field property check, plain")
     public void fieldPlain() {
-        final Field field = new Field(MapColors.EMPTY.getColor());
+        final Field field = new Field(MapColor.EMPTY.getColor());
         assertTrue(field.isWalkable());
         assertFalse(field.hasTree());
         assertFalse(field.hasStone());
@@ -37,7 +37,7 @@ public class FieldTest {
     @Test
     @DisplayName("Field property check, water")
     public void fieldWater() {
-        final Field field = new Field(MapColors.WATER.getColor());
+        final Field field = new Field(MapColor.WATER.getColor());
         assertFalse(field.isWalkable());
         assertFalse(field.hasTree());
         assertFalse(field.hasStone());
@@ -52,7 +52,7 @@ public class FieldTest {
     @Test
     @DisplayName("Field property check, tree")
     public void fieldTree() {
-        final Field field = new Field(MapColors.TREE.getColor());
+        final Field field = new Field(MapColor.TREE.getColor());
         assertTrue(field.isWalkable());
         assertTrue(field.hasTree());
         assertFalse(field.hasStone());
@@ -67,7 +67,7 @@ public class FieldTest {
     @Test
     @DisplayName("Field property check, stone")
     public void fieldStone() {
-        final Field field = new Field(MapColors.STONE.getColor());
+        final Field field = new Field(MapColor.STONE.getColor());
         assertTrue(field.isWalkable());
         assertFalse(field.hasTree());
         assertTrue(field.hasStone());
@@ -82,7 +82,7 @@ public class FieldTest {
     @Test
     @DisplayName("Field property check, twig")
     public void fieldTwig() {
-        final Field field = new Field(MapColors.TWIG.getColor());
+        final Field field = new Field(MapColor.TWIG.getColor());
         assertTrue(field.isWalkable());
         assertFalse(field.hasTree());
         assertFalse(field.hasStone());
@@ -95,7 +95,7 @@ public class FieldTest {
     @Test
     @DisplayName("Field property check, berry")
     public void fieldBerry() {
-        final Field field = new Field(MapColors.BERRY.getColor());
+        final Field field = new Field(MapColor.BERRY.getColor());
         assertTrue(field.isWalkable());
         assertFalse(field.hasTree());
         assertFalse(field.hasStone());
@@ -109,7 +109,7 @@ public class FieldTest {
     @Test
     @DisplayName("Field property check, carrot")
     public void fieldCarrot() {
-        final Field field = new Field(MapColors.CARROT.getColor());
+        final Field field = new Field(MapColor.CARROT.getColor());
         assertTrue(field.isWalkable());
         assertFalse(field.hasTree());
         assertFalse(field.hasStone());
@@ -122,7 +122,7 @@ public class FieldTest {
     @Test
     @DisplayName("Field twig collect with tool")
     public void fieldTwigCollectWithTool() {
-        final Field field = new Field(MapColors.TWIG.getColor());
+        final Field field = new Field(MapColor.TWIG.getColor());
         assumeTrue(field.isWalkable());
         assumeFalse(field.hasTree());
         assumeFalse(field.hasStone());
@@ -146,7 +146,7 @@ public class FieldTest {
     @Test
     @DisplayName("Field twig collect without tool")
     public void fieldTwigCollectWithoutTool() {
-        final Field field = new Field(MapColors.TWIG.getColor());
+        final Field field = new Field(MapColor.TWIG.getColor());
         assumeTrue(field.isWalkable());
         assumeFalse(field.hasTree());
         assumeFalse(field.hasStone());
@@ -166,7 +166,7 @@ public class FieldTest {
     @Test
     @DisplayName("Field log collect with tool")
     public void fieldLogCollectWithTool() {
-        final Field field = new Field(MapColors.TREE.getColor());
+        final Field field = new Field(MapColor.TREE.getColor());
         assumeTrue(field.isWalkable());
         assumeTrue(field.hasTree());
         assumeFalse(field.hasStone());
@@ -190,7 +190,7 @@ public class FieldTest {
     @Test
     @DisplayName("Field log collect without tool")
     public void fieldLogCollectWithoutTool() {
-        final Field field = new Field(MapColors.TREE.getColor());
+        final Field field = new Field(MapColor.TREE.getColor());
         assumeTrue(field.isWalkable());
         assumeTrue(field.hasTree());
         assumeFalse(field.hasStone());
@@ -210,7 +210,7 @@ public class FieldTest {
     @Test
     @DisplayName("Field log collect with wrong tool")
     public void fieldLogCollectWithWrongTool() {
-        final Field field = new Field(MapColors.TREE.getColor());
+        final Field field = new Field(MapColor.TREE.getColor());
         assumeTrue(field.isWalkable());
         assumeTrue(field.hasTree());
         assumeFalse(field.hasStone());
@@ -231,7 +231,7 @@ public class FieldTest {
     @Test
     @DisplayName("Field stone collect with tool")
     public void fieldStoneCollectWithTool() {
-        final Field field = new Field(MapColors.STONE.getColor());
+        final Field field = new Field(MapColor.STONE.getColor());
         assumeTrue(field.isWalkable());
         assumeFalse(field.hasTree());
         assumeTrue(field.hasStone());
@@ -255,7 +255,7 @@ public class FieldTest {
     @Test
     @DisplayName("Field stone collect without tool")
     public void fieldStoneCollectWithoutTool() {
-        final Field field = new Field(MapColors.STONE.getColor());
+        final Field field = new Field(MapColor.STONE.getColor());
         assumeTrue(field.isWalkable());
         assumeFalse(field.hasTree());
         assumeTrue(field.hasStone());
@@ -275,7 +275,7 @@ public class FieldTest {
     @Test
     @DisplayName("Field stone collect with wrong tool")
     public void fieldStoneCollectWithWrongTool() {
-        final Field field = new Field(MapColors.STONE.getColor());
+        final Field field = new Field(MapColor.STONE.getColor());
         assumeTrue(field.isWalkable());
         assumeFalse(field.hasTree());
         assumeTrue(field.hasStone());
@@ -296,7 +296,7 @@ public class FieldTest {
     @Test
     @DisplayName("Field stone collect with damaged tool")
     public void fieldStoneCollectWithDamagedTool() {
-        final Field field = new Field(MapColors.STONE.getColor());
+        final Field field = new Field(MapColor.STONE.getColor());
         assumeTrue(field.isWalkable());
         assumeFalse(field.hasTree());
         assumeTrue(field.hasStone());
