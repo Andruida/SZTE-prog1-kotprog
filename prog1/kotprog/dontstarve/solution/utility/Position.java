@@ -107,4 +107,14 @@ public class Position {
         return Float.compare(position.y, y) == 0;
     }
 
+    public Direction directionTo(Position other) {
+        float dx = other.x - x;
+        float dy = other.y - y;
+        if (Math.abs(dx) > Math.abs(dy)) {
+            return dx > 0 ? Direction.RIGHT : Direction.LEFT;
+        } else {
+            return dy > 0 ? Direction.DOWN : Direction.UP;
+        }
+    }
+
 }

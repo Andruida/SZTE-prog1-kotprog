@@ -20,6 +20,7 @@ import prog1.kotprog.dontstarve.solution.utility.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -344,12 +345,16 @@ public final class GameManager {
         if (humanPlayer.getHp() > 0) {
             action.execute(humanPlayer);
         }
+        cleanUpDeadCharacters();
 
 
         if (!tutorial) {
-            for (BaseCharacter character : characters.values()) {
+
+            ArrayList<BaseCharacter> unticked = new ArrayList<>(characters.values());
+            for (BaseCharacter character : unticked) {
                 if (character.getHp() > 0 && character.canThink()) {
                     character.think().execute((MutableCharacter)character);
+                    cleanUpDeadCharacters();
                 }
             }
         }
@@ -365,20 +370,25 @@ public final class GameManager {
                 ((MutableCharacter)character).tick();
             }
         }
-        List<String> deadCharacters = new ArrayList<>();
-        for (BaseCharacter character : characters.values()) {
-            if (character.getHp() <= 0) {
-                deadCharacters.add(character.getName());
-            }
-        }
-        for (String deadCharacter : deadCharacters) {
-            characters.remove(deadCharacter);
-        }
+        
+        cleanUpDeadCharacters();
+        
 
         currentTick++;
 
         if (remainingCharacters() <= 1) {
             gameState = GameState.FINISHED;
+        }
+    }
+
+    public void cleanUpDeadCharacters() {
+        Iterator<BaseCharacter> it = characters.values().iterator();
+        while (it.hasNext()) {
+            BaseCharacter character = it.next();
+            if (character.getHp() <= 0) {
+                it.remove();
+                continue;
+            }
         }
     }
 
@@ -437,5 +447,9 @@ public final class GameManager {
             return;
         }
         this.tutorial = tutorial;
+    }
+
+    public MutableCharacter getHumanPlayer() {
+        return (MutableCharacter)characters.get(humanPlayerName);
     }
 }
